@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class LikeDislikeQuery extends Query{
-    public static int[] getLikesDislikesCount( Video video) throws Exception{
-        // this method SUMS the likes Count and dislikes Count of a video
+    public static int[] getLikesDislikesCount( int videoID ) throws Exception{
+        // this method SUMS the likes Count and dislikes Count of a video based on videoID
         // return the result as an array
         // [0] = likesCount
         // [1] = dislikesCount
@@ -22,7 +22,7 @@ public class LikeDislikeQuery extends Query{
                          "COALESCE(SUM(like_dislike = 1), 0) AS likes,\n" +
                          "COALESCE(SUM(like_dislike = 0), 0) AS dislikes\n" +
                          "FROM assignment.likedislike\n" +
-                         "WHERE videoID = " + video.getVideoID() + " ; ";
+                         "WHERE videoID = " + videoID + " ; ";
         ResultSet rs   = st.executeQuery( query );
 
         rs.next();
@@ -35,7 +35,7 @@ public class LikeDislikeQuery extends Query{
         con.close();
         return ld;
     }
-    public static boolean likedDisliked (User user, Video video) throws Exception{
+    public static boolean likedDisliked (int userID, int videoID) throws Exception{
         // this method checks whether or not has "user" (liked or disliked) "video"
         // return true if "user" (liked or disliked) "video" in the past
         // return false otherwise
@@ -45,20 +45,19 @@ public class LikeDislikeQuery extends Query{
         Statement st   = con.createStatement();
         String query   = "SELECT COUNT(*) " + "\n" +
                          "FROM assignment.likedislike " + "\n" +
-                         "WHERE     userID = "    + user.getUserID() + "\n" +
-                         "AND "+ " videoID = "    + video.getVideoID() + "\n ;" ;
+                         "WHERE     userID = "    + userID + "\n" +
+                         "AND "+ " videoID = "    + videoID + "\n ;" ;
 
         ResultSet rs   = st.executeQuery( query );
 
         rs.next();
         int occ = rs.getInt( "COUNT(*)");
-//        System.out.println(occ);
 
         st.close();
         con.close();
         return (occ == 1);
     }
-    public static boolean getStatus( User user, Video video) throws Exception {
+    public static boolean getStatus( int userID, int videoID ) throws Exception {
         // this method is used after confirming "user" has either (liked or disliked) "video"
         //
         // returns true   if user "liked" video
@@ -68,8 +67,8 @@ public class LikeDislikeQuery extends Query{
         Statement st   = con.createStatement();
         String query   = "SELECT like_dislike " + "\n" +
                          "FROM assignment.likedislike " + "\n" +
-                         "WHERE     userID = "    + user.getUserID() + "\n" +
-                         "AND "+ " videoID = "    + video.getVideoID() + "\n ;" ;
+                         "WHERE     userID = "    + userID + "\n" +
+                         "AND "+ " videoID = "    + videoID + "\n ;" ;
         ResultSet rs   = st.executeQuery( query );
 
         rs.next();
@@ -79,7 +78,7 @@ public class LikeDislikeQuery extends Query{
 
         return (status == 1);
     }
-    public static void insertNew(User user , Video video, int i) throws Exception{
+    public static void insertNew( int userID , int videoID , int i) throws Exception{
         // this method insert a new record where "user" (likes or dislikes) "video"
         /**
          *  i   =  1 (like)
@@ -92,15 +91,15 @@ public class LikeDislikeQuery extends Query{
         PreparedStatement pst = con.prepareStatement(query);
 
         // userID, videoID, like_dislike
-        pst.setString(1, Integer.toString( user.getUserID() ) );
-        pst.setString(2, Integer.toString( video.getVideoID() ) );
+        pst.setString(1, Integer.toString( userID ) );
+        pst.setString(2, Integer.toString( videoID ) );
         pst.setInt(3, i);
         pst.executeUpdate();
 
         pst.close();
         con.close();
     }
-    public static void update( User user , Video video, int i) throws Exception{
+    public static void update( int userID, int videoID, int i) throws Exception{
         // this method is used after confirming "user" has either (liked or disliked) an "video"
         //                              but now the "user" changes from like to dislike
         //                                                         or
@@ -113,19 +112,34 @@ public class LikeDislikeQuery extends Query{
         // userID, videoID, like_dislike
         String query =   "UPDATE assignment.likedislike\n" +
                          "SET like_dislike = " + i +   "\n" +
-                         "WHERE     userID = "    + user.getUserID() + "\n" +
-                         "AND "+ " videoID = "    + video.getVideoID() + "\n ;" ;
+                         "WHERE     userID = "    + userID + "\n" +
+                         "AND "+ " videoID = "    + videoID + "\n ;" ;
 
         st.executeUpdate( query );
         st.close();
         con.close();
     }
-    public static void delete( Video video) throws Exception{
+    public static void delete( int videoID ) throws Exception{
+        // this methods deletes all records from "likedislike" table based on videoID
+
         Connection con = getConnection();
         Statement st = con.createStatement();
         String query =   "DELETE \n" +
                          "FROM assignment.likedislike \n" +
-                         "WHERE videoID = " + video.getVideoID() +" ; ";
+                         "WHERE videoID = " + videoID +" ; ";
+
+        st.executeUpdate( query );
+        st.close();
+        con.close();
+    }
+    public static void deleteAcc( int userID ) throws Exception{
+        // this methods deletes all records from "likedislike" table based on userID
+
+        Connection con = getConnection();
+        Statement st = con.createStatement();
+        String query =   "DELETE \n" +
+                         "FROM assignment.likedislike \n" +
+                         "WHERE userID = " + userID +" ; ";
 
         st.executeUpdate( query );
         st.close();

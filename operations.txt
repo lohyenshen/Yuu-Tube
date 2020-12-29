@@ -1,0 +1,9 @@
+A. Login
+B. Register
+C. Search
+D. Upload Video
+E. Change Email
+F. Change Password
+G. Delete Video(s)
+H. Delete Account
+L. Log out

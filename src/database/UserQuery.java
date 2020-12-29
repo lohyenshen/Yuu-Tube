@@ -101,5 +101,33 @@ public class UserQuery extends Query{
         st.close();
         con.close();
     }
+    public static void updateSubscribersCount( int userID ) throws Exception {
+        // updates subscribersCount of a user in "user" table
+
+        Connection con = getConnection();
+        Statement st = con.createStatement();
+
+        int occ = SubscriberQuery.getSubscribersCount( userID );
+        String query =   "UPDATE assignment.user\n" +
+                         "SET subscribersCount = " + occ + "\n" +
+                         "WHERE userID = " + userID + " ; ";
+
+        st.executeUpdate( query );
+        st.close();
+        con.close();
+    }
+    public static void deleteAcc( int userID ) throws Exception{
+        // this method deletes a record from "user" table based on (userID)
+
+        Connection con = getConnection();
+        Statement st = con.createStatement();
+        String query =   "DELETE \n" +
+                         "FROM assignment.user\n" +
+                         "WHERE userID = " + userID +" ; ";
+
+        st.executeUpdate( query );
+        st.close();
+        con.close();
+    }
 }
 

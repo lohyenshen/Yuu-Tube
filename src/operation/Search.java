@@ -71,20 +71,27 @@ public class Search{
                         //     (a)                                  (b)
                         // but has (a)    subscribed to             (b) before ?
                         else {
+                            validID = true;
+
                             // if (a) has subscribed to (b) before
+                            // (a) will now unsubscribes to b
                             if ( searchedUser.getSubscribed() ) {
-                                System.out.println("Channel = " + searchedUser.getName());
-                                System.out.println("You have subscribed to this channel in the PAST!");
+
+                                // delete the record where "currentUser" subscribes to "searchedUser"
+                                SubscriberQuery.delete( currentUser.getUserID() , searchedUser.getUserID() );
+                                // decrease subscribersCount of the searchedUser
+                                Query.decrease("user", "subscribersCount",  1, "userID", searchedUser.getUserID());
+
+                                System.out.println("UNSUBSCRIBED successfully from " + searchedUser.getName());
                                 break;
                             }
                             // (a) has not subscribed to (b) before
                             else {
-                                validID = true;
-
-                                SubscriberQuery.insertNew(currentUser, searchedUser);
+                                // insert a new record where "currentUser" subscribes to "searchedUser"
+                                SubscriberQuery.insertNew( currentUser.getUserID() , searchedUser.getUserID() );
                                 // increase subscribersCount of the searchedUser
-                                Query.increase("user", "subscribersCount", "+", 1, "userID", searchedUser.getUserID());
-                                System.out.println("Subscribed successfully to " + searchedUser.getName());
+                                Query.increase("user", "subscribersCount",  1, "userID", searchedUser.getUserID());
+                                System.out.println("SUBSCRIBED successfully to " + searchedUser.getName());
                                 break;
                             }
                         }

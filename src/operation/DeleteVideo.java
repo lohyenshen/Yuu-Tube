@@ -60,18 +60,13 @@ public class DeleteVideo {
     public static void delete( User currentUser, Video currentVideo ) throws Exception{
 
         // decrease user's videosCount in database
-        Query.increase("user", "videosCount", "-", 1, "userId", currentUser.getUserID());
-        // delete record from "likedislike" table
-        LikeDislikeQuery.delete( currentVideo );
-        // delete record from "video" table
-        VideoQuery.delete( currentVideo );
+        Query.decrease("user", "videosCount",  1, "userId", currentUser.getUserID());
+        // delete all records from "likedislike" table
+        LikeDislikeQuery.delete( currentVideo.getVideoID() );
+        // delete a record from "video" table
+        VideoQuery.delete( currentVideo.getVideoID()  );
         // delete video from directory
-        File f = new File( System.getProperty("user.dir") + "\\videos\\" + currentVideo.getPath() );
-        if ( f.delete() )
-            System.out.println("Deleted \'" + currentVideo.getTitle() + "\' successfully");
-
-        else
-            System.out.println( currentVideo.getTitle() + " is not deleted");
+        fromDirectory( currentVideo );
     }
     public static boolean isInteger(String s){
         // verifies whether or not a String entered is a valid Integer
@@ -84,5 +79,14 @@ public class DeleteVideo {
         }
         return L > 0; // return false if L is 0 (empty string)
         // else, return true because it is (not an empty string) and (all its elements are digits)
+    }
+    public static void fromDirectory( Video video ){
+        // this method deletes a video from directory "videos" based on a Video object
+
+        File f = new File( System.getProperty("user.dir") + "\\videos\\" + video.getPath() );
+        if ( f.delete() )
+            System.out.println("Deleted \'" + video.getTitle() + "\' successfully");
+        else
+            System.out.println( video.getTitle() + " is not deleted");
     }
 }

@@ -31,12 +31,24 @@ public class Query {
             return size;
         }
     }
-    public static void increase(String table, String column, String operation, int value, String conColumn, int conValue) throws Exception{
+    public static void increase(String table, String column, int value, String conColumn, int conValue) throws Exception{
         Connection con = getConnection();
         Statement st = con.createStatement();
 
         String query =  "UPDATE assignment."+ table +"\n" +
-                "SET "+ column +" = "+column + operation + " "+ value +" "+"\n" +
+                "SET "+ column +" = "+column + " + " + " "+ value +" "+"\n" +
+                "WHERE " + conColumn + " = " + conValue +" ;";
+
+        st.executeUpdate( query );
+        st.close();
+        con.close();
+    }
+    public static void decrease(String table, String column, int value, String conColumn, int conValue) throws Exception{
+        Connection con = getConnection();
+        Statement st = con.createStatement();
+
+        String query =  "UPDATE assignment."+ table +"\n" +
+                "SET "+ column +" = "+column + " - " + " "+ value +" "+"\n" +
                 "WHERE " + conColumn + " = " + conValue +" ;";
 
         st.executeUpdate( query );

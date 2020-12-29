@@ -95,7 +95,7 @@ public class VideoQuery  extends Query{
 
         return videos;
     }
-    public static void insertNew(Video video) throws Exception{
+    public static void insertNew( Video video) throws Exception{
         // this method insert a new video to database
 
         //     comments, path
@@ -114,7 +114,7 @@ public class VideoQuery  extends Query{
         // insert video details  in database
         pst.executeUpdate();
         // increase user's videosCount in database
-        Query.increase("user", "videosCount", "+", 1, "userId", video.getUserID());
+        Query.increase("user", "videosCount",  1, "userId", video.getUserID());
 
         pst.close();
         con.close();
@@ -168,30 +168,32 @@ public class VideoQuery  extends Query{
         st.close();
         con.close();
     }
-    public static void updateLikesDislikesCount( Video video) throws Exception{
-        // update the (likesCount column) and (dislikesCount column) of a video in database
+    public static void updateLikesDislikesCount( int videoID ) throws Exception{
+        // update the (likesCount column) and (dislikesCount column) of a video in database based on videoID
 
         Connection con = getConnection();
         Statement st = con.createStatement();
-        int[] ld     = LikeDislikeQuery.getLikesDislikesCount( video );
+        int[] ld     = LikeDislikeQuery.getLikesDislikesCount( videoID );
 
         // videoID, userID, title, likesCount, dislikesCount, viewsCount, comments, path
         String query =  "UPDATE assignment.video\n" +
                         "SET \n" +
                         "likesCount =    " +ld[0] +" , \n" +
                         "dislikesCount = " +ld[1] +"  \n" +
-                        "WHERE videoID = " + video.getVideoID() + " ; ";
+                        "WHERE videoID = " + videoID + " ; ";
 
         st.executeUpdate( query );
         st.close();
         con.close();
     }
-    public static void delete( Video video) throws Exception{
+    public static void delete( int videoID ) throws Exception{
+        // this method deletes a record from "video" table based on (videoID)
+
         Connection con = getConnection();
         Statement st = con.createStatement();
         String query =   "DELETE \n" +
                          "FROM assignment.video\n" +
-                         "WHERE videoID = " + video.getVideoID() +" ; ";
+                         "WHERE videoID = " + videoID +" ; ";
 
         st.executeUpdate( query );
         st.close();

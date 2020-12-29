@@ -149,7 +149,8 @@ public class Video {
             fc.setFileFilter(new FileNameExtensionFilter("MP4 files", "mp4"));
 //                File wd = new File(System.getProperty("user.dir"));
             /////////// alter the pathname to change JFileChooser open location ///////////////////
-            File cd = new File("C:\\Users\\lohye\\Desktop\\videossss\\");
+//            File cd = new File("C:\\Users\\lohye\\Desktop\\videossss\\");
+            File cd = new File(System.getProperty("user.home"));
             //////////////////////////////////////////////////////////////////////////////////////
             fc.setCurrentDirectory(cd);
             fc.setMultiSelectionEnabled(true);
@@ -224,8 +225,8 @@ public class Video {
 
 
         System.out.println();
-        if ( LikeDislikeQuery.likedDisliked( currentUser, this)){
-            boolean status = LikeDislikeQuery.getStatus( currentUser, this);
+        if ( LikeDislikeQuery.likedDisliked( currentUser.getUserID() , this.videoID )){
+            boolean status = LikeDislikeQuery.getStatus( currentUser.getUserID() , this.videoID);
             if (status){
                 System.out.println("You LIKED this video before");
             }

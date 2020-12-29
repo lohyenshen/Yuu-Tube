@@ -1,6 +1,7 @@
 package app;
 
 import database.VideoQuery;
+import operation.DeleteAccount;
 import operation.DeleteVideo;
 import operation.PlayVideo;
 import operation.Search;
@@ -87,6 +88,26 @@ public class MainPage {
                 else{
                     currentUser = DeleteVideo.main( currentUser );
                 }
+            } else if (op == 'H'){
+                if ( currentUser == null){
+                    System.out.println("-----Please login before proceeding to DELETE ACCOUNT(S) -----");
+                    System.out.println("-----Login now          (A)-----");
+                }
+                else{
+                    System.out.println("Are you sure about DELETING your account?");
+                    System.out.println("All data associated with this account will be DELETED !");
+                    System.out.print("Enter \'yes\' to proceed to ACCOUNT DELETION: ");
+                    String s = sc.nextLine();
+
+                    if (s.equals("yes")){
+                        DeleteAccount.main( currentUser );
+                        System.out.println("Account DELETED successfully");
+                        currentUser = null;
+                    }
+                    else{
+                        System.out.println("Account NOT DELETED");
+                    }
+                }
             }
             else {
                 validOperation = false;
@@ -106,24 +127,24 @@ public class MainPage {
         System.out.println();
         System.out.println("-----Welcome to Yuu-Tube v1.0 ! -----");
         System.out.printf("---------------Top %d trending videos------------------\n", trendingVideos.length);
+        System.out.println("                                           Views Count");
         for (int i = 0; i < trendingVideos.length ; i++) {
-            System.out.printf("%d) %-50s\n" , (i+1), trendingVideos[i].getTitle() );
+            System.out.printf("%d) %-50s%-5d\n" , (i+1), trendingVideos[i].getTitle(), trendingVideos[i].getViewsCount() );
         }
         System.out.println();
-//        System.out.println("\n\n\n\n\n");
-        /*System.out.println("A. Login");
+        /*System.out.println("\n\n\n\n\n");
+        System.out.println("A. Login");
         System.out.println("B. Register");
-        System.out.println("C. Search video");
+        System.out.println("C. Search");
         System.out.println("D. Upload Video");
         System.out.println("E. Change Email");
         System.out.println("F. Change Password");
         System.out.println("G. Delete Video(s)");
-//        System.out.println("H. Delete Account");
-        System.out.println("L. Log out");*/
-        System.out.println();
+        System.out.println("H. Delete Account");
+        System.out.println("L. Log out");
+        System.out.println();*/
         System.out.println("--------------------------------------------------");
         System.out.println("To exit Yuu-Tube        Please enter \"e\" ");
-        System.out.println("To log out              Please enter \"L\" ");
         System.out.print("What are you up to now? Please select  [1-5][A-L]: ");
     }
 }

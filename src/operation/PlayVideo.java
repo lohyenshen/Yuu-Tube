@@ -15,13 +15,13 @@ public class PlayVideo {
 
         // play the video using VLC player
         String path = System.getProperty("user.dir") + "\\videos\\" + currentVideo.getPath();
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////change this to path where ur VLC is located///////////////////////////////
         ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe", "", path);
         //////////////////////////////////////////////////////////////////////////////////////////////////
         Process player = pb.start();
 
         // increase viewsCount of video in database
-        Query.increase("video", "viewsCount", "+", 1, "videoID", currentVideo.getVideoID());
+        Query.increase("video", "viewsCount", 1, "videoID", currentVideo.getVideoID());
 
         Scanner sc = new Scanner(System.in);
         do {
@@ -69,11 +69,13 @@ public class PlayVideo {
         //         = false (user disliked the video before)
 
         // user liked or disliked the video before
-        if ( LikeDislikeQuery.likedDisliked( currentUser, currentVideo) ){
+        if ( LikeDislikeQuery.likedDisliked( currentUser.getUserID() , currentVideo.getVideoID() ) ){
             /**
+             * -------------------------------------------------------------------------------
              *           status    |       ld       |               |
              * -------------------------------------------------------------------------------
-             *   database's status | user opeartion | operation     | database's latest value
+             *   database's status | user operation | operation     | database's supposed latest value
+             * -------------------------------------------------------------------------------
              *            dislike  |       dislike  |               | dislike
              *            dislike  |          like  | change        | like
              *               like  |       dislike  | change        | dislike
@@ -86,30 +88,30 @@ public class PlayVideo {
              *                  1  |            1   | 0 (changes not required)
              *
              */
-            boolean status = LikeDislikeQuery.getStatus( currentUser, currentVideo);
+            boolean status = LikeDislikeQuery.getStatus( currentUser.getUserID() , currentVideo.getVideoID() );
             if (!status && ld){
                 // update dislike to like
-                LikeDislikeQuery.update( currentUser, currentVideo, 1);
+                LikeDislikeQuery.update( currentUser.getUserID(), currentVideo.getVideoID(), 1);
             }
             else if (status && !ld){
                 // update like to dislike
-                LikeDislikeQuery.update( currentUser, currentVideo, 0);
+                LikeDislikeQuery.update( currentUser.getUserID(), currentVideo.getVideoID(), 0);
             }
         }
         // user HAS NOT liked nor disliked the video before
         else{
             // store like in database
             if (ld) {
-                LikeDislikeQuery.insertNew( currentUser, currentVideo, 1);
+                LikeDislikeQuery.insertNew( currentUser.getUserID() , currentVideo.getVideoID(), 1);
             }
             // store dislike in database
             else{
-                LikeDislikeQuery.insertNew( currentUser, currentVideo, 0);
+                LikeDislikeQuery.insertNew( currentUser.getUserID(), currentVideo.getVideoID(), 0);
             }
         }
 
         // update likes/dislikes count in video table
-        VideoQuery.updateLikesDislikesCount( currentVideo );
+        VideoQuery.updateLikesDislikesCount( currentVideo.getVideoID() );
     }
 }
 
