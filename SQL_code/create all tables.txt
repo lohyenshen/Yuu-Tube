@@ -1,0 +1,53 @@
+CREATE DATABASE `assignment`;
+USE assignment;
+
+CREATE TABLE user
+(
+	userID int NOT NULL AUTO_INCREMENT,
+    
+    name VARCHAR(100) , 					   
+    email VARCHAR(100),
+    password VARCHAR(100),
+    videosCount int,
+    subscribersCount int,
+    
+    PRIMARY KEY(userID)
+);
+
+CREATE TABLE video
+(
+	videoID int NOT NULL AUTO_INCREMENT,
+	userID int,
+    
+    title VARCHAR(100),
+    likesCount int,
+    dislikesCount int,
+    viewsCount int,
+    comments TEXT,
+    path VARCHAR(100),
+    
+    PRIMARY KEY(videoID),
+    FOREIGN KEY (userID) REFERENCES user(userID)
+);
+
+CREATE TABLE likedislike
+(
+	userID int,
+    videoID int,
+    
+    like_dislike int,
+    
+    PRIMARY KEY(userID, videoID),
+    FOREIGN KEY (userID) REFERENCES user(userID),
+    FOREIGN KEY (videoID) REFERENCES video(videoID)
+);
+
+CREATE TABLE subscriber
+(
+    subscriberID int,
+    userID int,
+    
+    FOREIGN KEY (subscriberID) REFERENCES user(userID),
+    FOREIGN KEY (userID) REFERENCES user(userID)
+);
+
