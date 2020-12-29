@@ -5,6 +5,7 @@
 2) run sql txt (SQL—code)on MySQL to create the required tables
 
 3) set up VLC and paste the path (under PlayVideo class)
+    LINK = https://www.videolan.org/vlc/download-windows.html
 
 4) change the path of JFileChooser to the path u want (under Video class chooseFiles method)
 
