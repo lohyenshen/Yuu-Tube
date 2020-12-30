@@ -1,10 +1,7 @@
 package app;
 
 import database.VideoQuery;
-import operation.DeleteAccount;
-import operation.DeleteVideo;
-import operation.PlayVideo;
-import operation.Search;
+import operation.*;
 
 import java.util.Scanner;
 
@@ -60,7 +57,7 @@ public class MainPage {
                     System.out.println("-----Login now          (A)-----");
                 }
                 else{
-                    Video.uploadVideo( currentUser );
+                    UploadVideo.main( currentUser );
                 }
             } else if (op == 'E'){
                 if ( currentUser == null){
@@ -90,7 +87,7 @@ public class MainPage {
                 }
             } else if (op == 'H'){
                 if ( currentUser == null){
-                    System.out.println("-----Please login before proceeding to DELETE ACCOUNT(S) -----");
+                    System.out.println("-----Please login before proceeding to DELETE ACCOUNT -----");
                     System.out.println("-----Login now          (A)-----");
                 }
                 else{

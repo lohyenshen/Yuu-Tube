@@ -58,15 +58,19 @@ public class DeleteVideo {
 
     }
     public static void delete( User currentUser, Video currentVideo ) throws Exception{
-
-        // decrease user's videosCount in database
-        Query.decrease("user", "videosCount",  1, "userId", currentUser.getUserID());
-        // delete all records from "likedislike" table
-        LikeDislikeQuery.delete( currentVideo.getVideoID() );
-        // delete a record from "video" table
-        VideoQuery.delete( currentVideo.getVideoID()  );
         // delete video from directory
-        fromDirectory( currentVideo );
+        // use a boolean variable "deletedVideo"
+        // to prevent program from (deleting record in database) if the (video is not deleted successfully in directory)
+
+        boolean deletedVideo = fromDirectory( currentVideo );
+        if (deletedVideo){
+            // decrease user's videosCount in database
+            Query.decrease("user", "videosCount",  1, "userId", currentUser.getUserID());
+            // delete all records from "likedislike" table
+            LikeDislikeQuery.delete( currentVideo.getVideoID() );
+            // delete a record from "video" table
+            VideoQuery.delete( currentVideo.getVideoID()  );
+        }
     }
     public static boolean isInteger(String s){
         // verifies whether or not a String entered is a valid Integer
@@ -80,13 +84,19 @@ public class DeleteVideo {
         return L > 0; // return false if L is 0 (empty string)
         // else, return true because it is (not an empty string) and (all its elements are digits)
     }
-    public static void fromDirectory( Video video ){
+    public static boolean fromDirectory( Video video ){
         // this method deletes a video from directory "videos" based on a Video object
+        // return true if video is deleted successfully
+        // return false if video is not deleted
 
         File f = new File( System.getProperty("user.dir") + "\\videos\\" + video.getPath() );
-        if ( f.delete() )
+        boolean deletedVideo = f.delete();
+
+        if (deletedVideo)
             System.out.println("Deleted \'" + video.getTitle() + "\' successfully");
         else
             System.out.println( video.getTitle() + " is not deleted");
+
+        return deletedVideo;
     }
 }

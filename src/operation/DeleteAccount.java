@@ -7,6 +7,8 @@ import database.SubscriberQuery;
 import database.UserQuery;
 import database.VideoQuery;
 
+import java.io.File;
+
 public class DeleteAccount {
     public static void main( User currentUser) throws Exception{
         System.out.println();
@@ -52,7 +54,13 @@ public class DeleteAccount {
         /**
          * PHASE 4
          *      delete a record in "user" table based on currentUser's ID
+         *      delete the user's directory
          */
         UserQuery.deleteAcc( currentUser.getUserID() );
+        File f = new File( System.getProperty("user.dir") + "\\videos\\" + currentUser.getName() );
+        if (f.delete())
+            System.out.println("Your directory to store video(s) DELETED successfully");
+        else
+            System.out.println("Your directory to store video(s) IS NOT DELETED");
     }
 }

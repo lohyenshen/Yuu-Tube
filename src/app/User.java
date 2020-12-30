@@ -101,9 +101,17 @@ public class User {
         User uniqueUser = createUniqueUser();
         UserQuery.insertNew( uniqueUser );
 
-
-        System.out.println("-----Account created successfully -----");
-        System.out.println("-----Please login now          (A)-----");
+        // create a directory to store all videos by this user in the future
+        File f = new File( System.getProperty("user.dir") + "\\videos\\" + uniqueUser.getName() );
+        if (f.mkdir()) {
+            System.out.println("Your directory to store video(s) created successfully");
+            System.out.println("-----Account created successfully -----");
+            System.out.println("-----Please login now          (A)-----");
+        }
+        else{
+            System.out.println("Your directory to store video(s) is NOT CREATED");
+            System.out.println("-----Account NOT CREATED -----");
+        }
     }
     private static User createUniqueUser() throws Exception{
         // this method ensures all new users are unique (name, email) are not duplicated
