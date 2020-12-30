@@ -12,8 +12,6 @@ public class Video {
     private String[] comments;
     private String path;
 
-    private static Video[] videos;
-
     // constructor
     public Video(int videoID, int userID, String title, int likesCount, int dislikesCount, int viewsCount, String[] comments, String path) {
         this.videoID = videoID;
@@ -59,6 +57,13 @@ public class Video {
         return path;
     }
 
+    public String toString(){
+        // for fun, depends on GUI
+        // videoID, userID, title, likesCount, dislikesCount, viewsCount,
+
+        String details = String.format("%20d|%20d|%60s|%20d|%20d|%20d", videoID, userID, title, likesCount, dislikesCount, viewsCount);
+        return details;
+    }
     public static void printVideoHeader(){
         // for fun, depends on GUI
 
@@ -70,16 +75,6 @@ public class Video {
 
         System.out.print(m + header + m);
     }
-
-    public String toString(){
-        // for fun, depends on GUI
-        // videoID, userID, title, likesCount, dislikesCount, viewsCount,
-
-        String details = String.format("%20d|%20d|%60s|%20d|%20d|%20d", videoID, userID, title, likesCount, dislikesCount, viewsCount);
-        return details;
-    }
-
-
     // methods
     public void printStatistics( User currentUser ) throws Exception{
         // this code is just for fun

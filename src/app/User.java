@@ -16,7 +16,6 @@ public class User {
     // for SearchQuery only
     private boolean subscribed;
 
-    private static User[] users;
 
     // constructor
     public User(int userID, String name, String email, String password, int videosCount, int subscribersCount, Video[] videos) {
@@ -40,7 +39,6 @@ public class User {
         this.subscribed = subscribed;
     }
     // getters
-
     public int getUserID() {
         return userID;
     }
@@ -71,10 +69,6 @@ public class User {
 
     public boolean getSubscribed() {
         return subscribed;
-    }
-
-    public static User[] getUsers() {
-        return users;
     }
 
     // toString
@@ -118,7 +112,7 @@ public class User {
         // by comparing (entered details) with (details extracted from database0
 
         Scanner sc = new Scanner(System.in);
-        users = UserQuery.getUsers();
+        User[] users = UserQuery.getUsers();
 
         String name;
         boolean isUniqueName;
@@ -196,7 +190,7 @@ public class User {
         System.out.print("Enter password: ");
         String passwordEntered = sc.nextLine();
 
-        users = UserQuery.getUsers();
+        User[] users = UserQuery.getUsers();
 
         for (User user : users) {
             if (emailEntered.equals(user.email)) {                  // email    in database
@@ -220,7 +214,7 @@ public class User {
     }
     public void changeEmail() throws Exception{
         Scanner sc = new Scanner(System.in);
-        users = UserQuery.getUsers();
+        User[] users = UserQuery.getUsers();
 
         System.out.println("-----CHANGING TO NEW EMAIL   -----");
         String oldEmail = email;
@@ -257,7 +251,7 @@ public class User {
     }
     public void changePassword() throws Exception{
         Scanner sc = new Scanner(System.in);
-        users = UserQuery.getUsers();
+        User[] users = UserQuery.getUsers();
 
         System.out.println("-----CHANGING TO NEW PASSWORD   -----");
         String oldPassword = password;
