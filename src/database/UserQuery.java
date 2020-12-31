@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class UserQuery extends Query{
     public static User getUser( int userID) throws Exception{
-        // associated with User class, deleteVideo method
+        // associated with DeleteVideo class, main method
         // obtain the LATEST details of a REQUIRED user from database
         // construct and return the an User object
 

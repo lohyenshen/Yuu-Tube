@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class UploadVideo {
-    public static void main(User currentUser) throws Exception {
+    public static void main( User currentUser) throws Exception {
         // this method will save video(s) uploaded by a user
 
         System.out.println("-----Choose video(s) to upload ---------");
@@ -73,7 +73,7 @@ public class UploadVideo {
 //            File cd = new File("C:\\Users\\lohye\\Desktop\\videossss\\");
             File cd = new File(System.getProperty("user.home"));
             //////////////////////////////////////////////////////////////////////////////////////
-            fc.setCurrentDirectory(cd);
+            fc.setCurrentDirectory( cd );
             fc.setMultiSelectionEnabled(true);
             fc.setDialogTitle("Choose video file(s) to upload");
             fc.setApproveButtonText("Upload video(s)");

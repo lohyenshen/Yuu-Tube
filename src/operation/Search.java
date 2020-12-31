@@ -8,7 +8,7 @@ import database.SearchQuery;
 import database.SubscriberQuery;
 
 public class Search{
-    public static void main( User currentUser) throws Exception{
+    public static void main( User currentUser ) throws Exception{
         Scanner sc = new Scanner(System.in);
         char c;
         do{
