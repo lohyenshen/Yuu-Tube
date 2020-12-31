@@ -24,19 +24,18 @@ public class MainPage {
                 currentUser = null;
                 System.out.println("-----LOG OUT successfully -----");
             } else if ( Character.isDigit( op ) ){
-                if ( currentUser == null ){
-                    System.out.println("-----Please login before proceeding to PLAY VIDEO -----");
-                    System.out.println("-----Login now          (A)-----");
-                }
-                else{
-                    i = Character.getNumericValue( op ) - 1;
+                i = Character.getNumericValue( op ) - 1;
+                if (i>=0 && i<trendingVideos.length)
+                    ; // validOperation remain as true
+                else
+                    validOperation = false;
 
-                    if (i>=0 && i<trendingVideos.length){
-                        PlayVideo.main( currentUser , trendingVideos[i] );
-                    }
-                    else {
-                        validOperation = false;
-                    }
+
+                if ( validOperation ){
+                    if ( currentUser == null )
+                        PlayVideo.withoutLogin( trendingVideos[i] );
+                    else
+                        PlayVideo.withLogin( currentUser , trendingVideos[i] );
                 }
             } else if (op == 'A') {
                 currentUser = null;
@@ -98,7 +97,7 @@ public class MainPage {
 
                     if (s.equals("yes")){
                         DeleteAccount.main( currentUser );
-                        System.out.println("Account DELETED successfully");
+                        System.out.println("-----Account DELETED successfully-----");
                         currentUser = null;
                     }
                     else{

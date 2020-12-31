@@ -111,4 +111,31 @@ public class Video {
         }
         System.out.println();
     }
+    public void printStatisticsWithoutLogin() throws Exception{
+        // this code is just for fun
+        // actual implementation depends on GUI
+
+        System.out.println();
+        System.out.printf("%50s|%20s|%20s|%20s|\n", "Title", "Views Count", "Likes Count", "Dislikes Count" );
+        for (int i = 0; i < 114; i++)
+            System.out.print("-");
+        System.out.println();
+        System.out.printf("%50s|%20d|%20d|%20d|\n", title, viewsCount, likesCount, dislikesCount);
+
+
+        System.out.println();
+
+        System.out.println();
+        System.out.println("Comments");
+        for (int i = 0; i < 114; i++)
+            System.out.print("-");
+        System.out.println();
+        // comments of new video is always initialized with ""
+        // therefore we need to skip the first comment, comments[0]
+        for (int i = 1; i < comments.length; i++) {
+            System.out.println( (i) + ") " + comments[i] );
+        }
+        System.out.println();
+        System.out.println("You cannot LIKE/ DISLIKE/ COMMENT because you're not LOGGED IN");
+    }
 }

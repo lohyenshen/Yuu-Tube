@@ -139,7 +139,7 @@ public class Search{
                     if (id == searchedVideo.getVideoID()) {
                         validID = true;
 
-                        PlayVideo.main( currentUser, searchedVideo );
+                        PlayVideo.withLogin( currentUser, searchedVideo );
                         // after a video is played, return to MainPage
                         // does not support playing multiple videos simultaneously
                         return;

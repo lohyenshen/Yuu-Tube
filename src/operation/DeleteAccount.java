@@ -59,8 +59,8 @@ public class DeleteAccount {
         UserQuery.deleteAcc( currentUser.getUserID() );
         File f = new File( System.getProperty("user.dir") + "\\videos\\" + currentUser.getName() );
         if (f.delete())
-            System.out.println("Your directory to store video(s) DELETED successfully");
+            System.out.println("-----Your directory to store video(s) DELETED successfully-----");
         else
-            System.out.println("Your directory to store video(s) IS NOT DELETED");
+            System.out.println("-----Your directory to store video(s) IS NOT DELETED      -----");
     }
 }

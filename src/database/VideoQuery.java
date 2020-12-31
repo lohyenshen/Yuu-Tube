@@ -4,7 +4,7 @@ import app.Video;
 import java.sql.*;
 public class VideoQuery  extends Query{
     public static Video getVideo( int videoID ) throws Exception{
-        // associated with PlayVideo class, main method
+        // associated with PlayVideo class,
         // obtain the LATEST details of a REQUIRED video from database latest(likesCount, dislikesCount, etc)
         // construct an return the Video object
 

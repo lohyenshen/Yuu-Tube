@@ -9,15 +9,12 @@ import database.VideoQuery;
 import java.util.Scanner;
 
 public class PlayVideo {
-
-    public static void main(User currentUser, Video currentVideo) throws Exception {
+    public static void withLogin (User currentUser, Video currentVideo) throws Exception {
         // this method knows which "user" is playing which "video"
 
         // play the video using VLC player
         String path = System.getProperty("user.dir") + "\\videos\\" + currentVideo.getPath();
-        //////////////////////////////////////change this to path where ur VLC is located///////////////////////////////
         ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe", "", path);
-        //////////////////////////////////////////////////////////////////////////////////////////////////
         Process player = pb.start();
 
         // increase viewsCount of video in database
@@ -112,6 +109,38 @@ public class PlayVideo {
 
         // update likes/dislikes count in video table
         VideoQuery.updateLikesDislikesCount( currentVideo.getVideoID() );
+    }
+    public static void withoutLogin (Video currentVideo) throws Exception {
+        // this method plays a video WITHOUT user login
+        // viewsCount of video will increase
+        // cannot like or dislike or comment ( because user takda login)
+
+        // play the video using VLC player
+        String path = System.getProperty("user.dir") + "\\videos\\" + currentVideo.getPath();
+        ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe", "", path);
+        Process player = pb.start();
+
+        // increase viewsCount of video in database
+        Query.increase("video", "viewsCount", 1, "videoID", currentVideo.getVideoID());
+
+        Scanner sc = new Scanner(System.in);
+        do {
+            currentVideo = VideoQuery.getVideo( currentVideo.getVideoID() );
+            currentVideo.printStatisticsWithoutLogin();
+
+            System.out.print("Enter \'e\' to EXIT playing video :");
+            String op = sc.nextLine();
+
+            if (op.isEmpty() || op.isBlank())
+                System.out.println("EMPTY or BLANK operation is INVALID !");
+            else if (op.equals("e"))
+                break;
+            else
+                System.out.println("INVALID OPERATION !");
+        } while (true) ;
+
+        // stop playing
+        player.destroy();
     }
 }
 

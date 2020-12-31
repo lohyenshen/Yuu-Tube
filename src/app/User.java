@@ -98,7 +98,7 @@ public class User {
         // create a directory to store all videos by this user in the future
         File f = new File( System.getProperty("user.dir") + "\\videos\\" + uniqueUser.getName() );
         if (f.mkdir()) {
-            System.out.println("Your directory to store video(s) created successfully");
+            System.out.println("-----Your directory to store video(s) created successfully-----");
             System.out.println("-----Account created successfully -----");
             System.out.println("-----Please login now          (A)-----");
         }
