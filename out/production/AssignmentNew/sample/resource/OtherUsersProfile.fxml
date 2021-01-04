@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.OtherUsersProfile">
+   <children>
+      <ImageView fitHeight="61.0" fitWidth="58.0" layoutX="7.0" layoutY="-1.0" onMouseClicked="#backTo" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/111.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="65.0" layoutY="13.0" onMouseClicked="#backTo" text="Yuutube" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <ImageView fitHeight="85.0" fitWidth="97.0" layoutX="36.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/Picture3.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="username" layoutX="28.0" layoutY="142.0" prefHeight="30.0" prefWidth="100.0" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="168.0" layoutY="57.0" text="User ID             :" textFill="WHITE" />
+      <Label layoutX="167.0" layoutY="91.0" text="Subscriber(s)    :" textFill="WHITE" />
+      <Label layoutX="168.0" layoutY="124.0" text="Video(s)           :" textFill="WHITE" />
+      <Button layoutX="445.0" layoutY="80.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="108.0" style="-fx-background-color: red;" text="Subscribe" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TableView layoutX="14.0" layoutY="175.0" prefHeight="214.0" prefWidth="567.0" style="-fx-background-color: black;">
+        <columns>
+          <TableColumn prefWidth="84.79998779296875" text="Video ID" />
+          <TableColumn prefWidth="414.4000244140625" text="Video Name" />
+            <TableColumn minWidth="0.0" prefWidth="67.20001220703125" text="Views" />
+        </columns>
+      </TableView>
+      <Label layoutX="499.0" layoutY="10.0" text="Profile" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="163.0" prefWidth="500.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Error_uploadVideo_sameTitle">
+    <children>
+        <ImageView fitHeight="67.0" fitWidth="63.0" layoutX="28.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../Photo/error.png" />
+            </image>
+        </ImageView>
+        <Button layoutX="224.0" layoutY="115.0" mnemonicParsing="false" onAction="#backToUploadVideo" prefHeight="22.0" prefWidth="53.0" style="-fx-background-color: white;" text="Okay">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></Button>
+        <Label layoutX="97.0" layoutY="61.0" text="Video of the SAME TITLE has already been uploaded !" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="15.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

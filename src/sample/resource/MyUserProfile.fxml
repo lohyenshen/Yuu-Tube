@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane onMouseMoved="#updateData" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MyUsersProfile">
+   <children>
+      <ImageView fitHeight="61.0" fitWidth="58.0" layoutX="7.0" onMouseClicked="#backTo" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/111.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Pane layoutX="7.0" layoutY="54.0" prefHeight="339.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="12.0" layoutY="141.0" onMouseClicked="#uploadVideo" text="Upload Video" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label layoutX="11.0" layoutY="176.0" text="Delete Video" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label layoutX="11.0" layoutY="210.0" onMouseClicked="#confirmationToChangeEmail" text="Change Email" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label layoutX="11.0" layoutY="245.0" onMouseClicked="#toChangePassword" text="Change Password" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label layoutX="11.0" layoutY="278.0" onMouseClicked="#toDeleteAccount" text="Delete Account" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label layoutX="12.0" layoutY="310.0" onMouseClicked="#logout" text="Logout" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <ImageView fitHeight="85.0" fitWidth="97.0" layoutX="29.0" layoutY="10.0" onMouseClicked="#update" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Photo/Picture3.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="usernameProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="95.0" prefHeight="34.0" prefWidth="108.0" text="Username" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="163.0" layoutY="89.0" text="Subscriber(s)              :" textFill="WHITE" />
+      <Label layoutX="157.0" layoutY="162.0" text="Videos" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="12.0" onMouseClicked="#backTo" prefHeight="34.0" prefWidth="84.0" text="YuuTube" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <Label layoutX="164.0" layoutY="119.0" text="Video(s)                     :" textFill="WHITE" />
+      <Label layoutX="162.0" layoutY="58.0" text="User ID                       :" textFill="WHITE" />
+      <TableView layoutX="157.0" layoutY="193.0" prefHeight="200.0" prefWidth="437.0" style="-fx-background-color: black;">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Video ID(s)" />
+          <TableColumn prefWidth="296.79998779296875" text="Video Name" />
+            <TableColumn prefWidth="63.20001220703125" text="View(s)" />
+        </columns>
+      </TableView>
+      <Label fx:id="top" layoutX="244.0" layoutY="11.0" text="User Profile" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="userID" layoutX="300.0" layoutY="58.0" prefHeight="18.0" prefWidth="85.0" textFill="WHITE" />
+      <Label fx:id="numOfSubscribers" layoutX="300.0" layoutY="90.0" prefHeight="18.0" prefWidth="85.0" textFill="WHITE" />
+      <Label fx:id="numOfVideos" layoutX="300.0" layoutY="120.0" prefHeight="18.0" prefWidth="85.0" textFill="WHITE" />
+   </children>
+</AnchorPane>
