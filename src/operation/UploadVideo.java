@@ -68,11 +68,9 @@ public class UploadVideo {
             fc.setFileFilter(new FileNameExtensionFilter("MOV files", "mov"));
             fc.setFileFilter(new FileNameExtensionFilter("MKV files", "mkv"));
             fc.setFileFilter(new FileNameExtensionFilter("MP4 files", "mp4"));
-//                File wd = new File(System.getProperty("user.dir"));
-            /////////// alter the pathname to change JFileChooser open location ///////////////////
-//            File cd = new File("C:\\Users\\lohye\\Desktop\\videossss\\");
+
             File cd = new File(System.getProperty("user.home"));
-            //////////////////////////////////////////////////////////////////////////////////////
+
             fc.setCurrentDirectory( cd );
             fc.setMultiSelectionEnabled(true);
             fc.setDialogTitle("Choose video file(s) to upload");
