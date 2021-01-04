@@ -6,6 +6,7 @@
     <JAVADOC />
     <SOURCES>
       <root url="file://$PROJECT_DIR$/External Library Used/commons-io-2.8.0-src/src/main/java" />
+      <root url="file://$PROJECT_DIR$/External Library Used/commons-io-2.8.0-src/src/test/java" />
     </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/External Library Used/commons-io-2.8.0-src" recursive="false" />
   </library>
