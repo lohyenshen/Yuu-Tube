@@ -4,7 +4,7 @@ import database.*;
 import java.io.File;
 import java.util.Scanner;
 
-import sample.controller.*;
+//import sample.controller.*;
 public class User {
     private int userID;               // unique, auto_increased, PRIMARY KEY in database
 
