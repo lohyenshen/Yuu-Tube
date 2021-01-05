@@ -1,6 +1,6 @@
 package app;
+import GUI.*;
 import database.*;
-
 import java.io.File;
 import java.util.Scanner;
 
@@ -189,10 +189,19 @@ public class User {
         boolean userExist = false;
         User currentUser = null;
 
-        System.out.print("Enter email : ");
-        String emailEntered = sc.nextLine();
-        System.out.print("Enter password: ");
-        String passwordEntered = sc.nextLine();
+        Login_Form login = new Login_Form() ;
+        String emailEntered = null;
+        String passwordEntered = null;
+
+        login.main();
+        do{
+            System.out.print("");
+            if(login.exit()){
+                emailEntered = login.getEmail();
+                passwordEntered = login.getPassword();
+                break;
+            }
+        }while(true);
 
         User[] users = UserQuery.getUsers();
 
