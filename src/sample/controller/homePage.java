@@ -2,6 +2,17 @@ package sample.controller;
 
 import app.*;
 import database.*;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import operation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,27 +26,33 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import sample.Main;
-import sample.controller.login;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Scanner;
+import java.util.ResourceBundle;
 
 public class homePage extends MyUsersProfile {
+    @FXML protected Label video1;
+    @FXML private Label video2;
+    @FXML private Label video3;
+    @FXML private Label video4;
+    @FXML private Label video5;
+    @FXML private Button toSearchUser;
+    @FXML private Label usernameHomePage;
+    @FXML private Button searchVideoButton;
+    @FXML private ImageView playTrendingVideo;
+    @FXML protected TextField playTrendingVideoText;
+    @FXML private ImageView loginImage;
+    @FXML private Label loginWord;
 
-    @FXML
-    private TextField searchUser;
-    @FXML
-    private MediaView mediaView;
-    @FXML
-    private Button toSearchUser;
-    @FXML
-    private Label usernameHomePage;
-
+    public static int currentVideoPlayingID;
+    public static Video currentVideoPlaying;
+    public int tempID;
+    private Service<Void> backgroundThread;
 
     public void changeSceneToProfile(MouseEvent event) throws Exception {
-
         if (Main.userOn) {
             URL url = new File("src/sample/resource/MyUserProfile.fxml").toURI().toURL();
             Parent profileParent = FXMLLoader.load(url);
@@ -63,12 +80,12 @@ public class homePage extends MyUsersProfile {
         Parent profileParent = FXMLLoader.load(url);
         Scene profileScene = new Scene(profileParent);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(profileScene);
         window.show();
     }
 
-    public void toSearchVideo(ActionEvent event) throws IOException {
+    public void toSearchVideo(ActionEvent event) throws Exception {
         if (Main.userOn) {
             URL url = new File("src/sample/resource/searchVideo.fxml").toURI().toURL();
             Parent profileParent = FXMLLoader.load(url);
@@ -88,17 +105,54 @@ public class homePage extends MyUsersProfile {
             window.setY(250);
             window.show();
         }
-
-
     }
 
-    public void toListOfUsers(ActionEvent event) throws IOException {
+
+    public void displayUsernameAfterLogin_trendingVideos(MouseEvent event) throws Exception {
+        if (VideoQuery.getTrendingVideos().length == 0) {
+            video1.setText("");
+            video2.setText("");
+            video3.setText("");
+            video4.setText("");
+            video5.setText("");
+        } else if (VideoQuery.getTrendingVideos().length == 1) {
+            video1.setText(VideoQuery.getTrendingVideos()[0].getTitle());
+        } else if (VideoQuery.getTrendingVideos().length == 2) {
+            video1.setText(VideoQuery.getTrendingVideos()[0].getTitle());
+            video2.setText(VideoQuery.getTrendingVideos()[1].getTitle());
+        } else if (VideoQuery.getTrendingVideos().length == 3) {
+            video1.setText(VideoQuery.getTrendingVideos()[0].getTitle());
+            video2.setText(VideoQuery.getTrendingVideos()[1].getTitle());
+            video3.setText(VideoQuery.getTrendingVideos()[2].getTitle());
+        } else if (VideoQuery.getTrendingVideos().length == 4) {
+            video1.setText(VideoQuery.getTrendingVideos()[0].getTitle());
+            video2.setText(VideoQuery.getTrendingVideos()[1].getTitle());
+            video3.setText(VideoQuery.getTrendingVideos()[2].getTitle());
+            video4.setText(VideoQuery.getTrendingVideos()[3].getTitle());
+        } else {
+            video1.setText(VideoQuery.getTrendingVideos()[0].getTitle());
+            video2.setText(VideoQuery.getTrendingVideos()[1].getTitle());
+            video3.setText(VideoQuery.getTrendingVideos()[2].getTitle());
+            video4.setText(VideoQuery.getTrendingVideos()[3].getTitle());
+            video5.setText(VideoQuery.getTrendingVideos()[4].getTitle());
+        }
+
         if (Main.userOn) {
-            URL url = new File("src/sample/resource/listOfUsers.fxml").toURI().toURL();
+            usernameHomePage.setText(login.loginUser.getName());
+            loginWord.setText("");
+            loginImage.setVisible(false);
+        } else {
+            usernameHomePage.setText("Not login");
+        }
+    }
+
+    public void toSearchUsers(ActionEvent event) throws IOException {
+        if (Main.userOn) {
+            URL url = new File("src/sample/resource/searchUser.fxml").toURI().toURL();
             Parent profileParent = FXMLLoader.load(url);
             Scene profileScene = new Scene(profileParent);
 
-            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(profileScene);
             window.show();
         } else {
@@ -115,94 +169,207 @@ public class homePage extends MyUsersProfile {
 
     }
 
-    public void displayUsernameAfterLogin(MouseEvent event) {
+    public void playTrendingVideo(MouseEvent event) throws Exception {
         if (Main.userOn) {
-            usernameHomePage.setText(login.loginUser.getName());
+            backgroundThread = new Service<Void>() {
+                //
+                @Override
+                protected Task<Void> createTask() {
+                    return new Task<Void>() {
+
+                        @Override
+                        protected Void call() throws Exception {
+                            if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
+                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[0]);
+                                tempID = VideoQuery.getTrendingVideos()[0].getVideoID();
+                                currentVideoPlaying = VideoQuery.getTrendingVideos()[0];
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
+                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[1]);
+                                tempID = VideoQuery.getTrendingVideos()[1].getVideoID();
+                                currentVideoPlaying = VideoQuery.getTrendingVideos()[1];
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
+                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[2]);
+                                tempID = VideoQuery.getTrendingVideos()[2].getVideoID();
+                                currentVideoPlaying = VideoQuery.getTrendingVideos()[2];
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
+                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[3]);
+                                tempID = VideoQuery.getTrendingVideos()[3].getVideoID();
+                                currentVideoPlaying = VideoQuery.getTrendingVideos()[3];
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
+                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[4]);
+                                tempID = VideoQuery.getTrendingVideos()[4].getVideoID();
+                                currentVideoPlaying = VideoQuery.getTrendingVideos()[4];
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("")) {
+                                System.out.println("Please enter something");
+                            }
+                            return null;
+                        }
+                    };
+                }
+            };
+            backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+                @Override
+                public void handle(WorkerStateEvent workerStateEvent) {
+                    System.out.println("Done");
+                    backgroundThread.getValue();
+                    backgroundThread.valueProperty();
+                }
+            });
+            backgroundThread.start();
+            if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[0].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[0];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[1].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[1];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[2].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[2];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[3].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[3];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[4].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[4];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("")) {
+                System.out.println("Please enter something");
+            }
+
+            URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
+            Parent profileParent = FXMLLoader.load(url);
+            Scene profileScene = new Scene(profileParent);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(profileScene);
+            window.show();
+
         } else {
-            usernameHomePage.setText("Not login");
+            backgroundThread = new Service<Void>() {
+
+                @Override
+                protected Task<Void> createTask() {
+                    return new Task<Void>() {
+
+                        @Override
+                        protected Void call() throws Exception {
+                            if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
+                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[0]);
+                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[0].getVideoID();
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
+                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[1]);
+                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[1].getVideoID();
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
+                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[2]);
+                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[1].getVideoID();
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
+                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[3]);
+                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[3].getVideoID();
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
+                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[4]);
+                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[4].getVideoID();
+
+                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("")) {
+                                System.out.println("Please enter something");
+                            }
+
+                            return null;
+                        }
+                    };
+                }
+            };
+            backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent workerStateEvent) {
+                    System.out.println("Done");
+                }
+            });
+            backgroundThread.start();
+
+            URL url = new File("src/sample/resource/homePage.fxml").toURI().toURL();
+            Parent profileParent = FXMLLoader.load(url);
+            Scene profileScene = new Scene(profileParent);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(profileScene);
+            window.setX(450);
+            window.setY(130);
+            window.show();
         }
     }
 
-    public void toSearchUsers(ActionEvent event) {
+    public void toVideoInfo(MouseEvent event) throws Exception {
+        if (Main.userOn) {
+            if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[0].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[0];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[1].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[1];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[2].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[2];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[3].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[3];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
+                currentVideoPlayingID = VideoQuery.getTrendingVideos()[4].getVideoID();
+                currentVideoPlaying = VideoQuery.getTrendingVideos()[4];
+
+            } else if (playTrendingVideoText.getText().equalsIgnoreCase("")) {
+                System.out.println("Please enter something");
+            }
+            URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
+            Parent profileParent = FXMLLoader.load(url);
+            Scene profileScene = new Scene(profileParent);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(profileScene);
+            window.setX(450);
+            window.setY(130);
+            window.show();
+        } else {
+            URL url = new File("src/sample/resource/Error_loginFirst.fxml").toURI().toURL();
+            Parent profileParent = FXMLLoader.load(url);
+            Scene profileScene = new Scene(profileParent);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(profileScene);
+            window.setX(600);
+            window.setY(250);
+            window.show();
+        }
     }
-//
-//    public void toSearchUsers(ActionEvent event) throws Exception {
-//        Scanner sc = new Scanner(System.in);
-//
-//        String s;
-//        do{
-//            //System.out.print("Search NAME of Users: ");
-//            s = searchUser.getText();
-//
-//            if (s.isBlank() || s.isEmpty()) {
-//                //System.out.println("search cannot be EMPTY or BLANK!");
-//            }
-//        } while( s.isBlank() || s.isEmpty() );
-//
-//        do{
-//            User[] searchedUsers  = SearchQuery.searchUsers( s , login.loginUser );
-//            //printSearchResult( searchedUsers );
-//
-//            boolean validID = false;
-////            System.out.println();
-////            System.out.println("Exit subscribing ,Enter \'e\'");
-////            System.out.print("To subscribe to a user, Enter userID: ");
-//            String op = sc.next();
-//            if (op.equals("e"))
-//                return;
-//
-//            int id;
-//            if (isInteger( op )){
-//                id = Integer.parseInt( op );
-//            }
-//            else{
-//                System.out.println("Enter a valid ID !");
-//                continue;
-//            }
-//
-//            for (User searchedUser : searchedUsers) {
-//                if (id == searchedUser.getUserID()) {
-//
-//                    // currentUser cannot subscribe to himself/herself
-//                    if (currentUser.getUserID() == searchedUser.getUserID()) {
-//                        System.out.println("Cannot subscribe to yourself !");
-//                        break;
-//                    }
-//                    // currentUser wants to subscribe to the searchedUser
-//                    //     (a)                                  (b)
-//                    // but has (a)    subscribed to             (b) before ?
-//                    else {
-//                        validID = true;
-//
-//                        // if (a) has subscribed to (b) before
-//                        // (a) will now unsubscribes to b
-//                        if ( searchedUser.getSubscribed() ) {
-//
-//                            // delete the record where "currentUser" subscribes to "searchedUser"
-//                            SubscriberQuery.delete( currentUser.getUserID() , searchedUser.getUserID() );
-//                            // decrease subscribersCount of the searchedUser
-//                            Query.decrease("user", "subscribersCount",  1, "userID", searchedUser.getUserID());
-//
-//                            System.out.println("UNSUBSCRIBED successfully from " + searchedUser.getName());
-//                            break;
-//                        }
-//                        // (a) has not subscribed to (b) before
-//                        else {
-//                            // insert a new record where "currentUser" subscribes to "searchedUser"
-//                            SubscriberQuery.insertNew( currentUser.getUserID() , searchedUser.getUserID() );
-//                            // increase subscribersCount of the searchedUser
-//                            Query.increase("user", "subscribersCount",  1, "userID", searchedUser.getUserID());
-//                            System.out.println("SUBSCRIBED successfully to " + searchedUser.getName());
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//            if (!validID)
-//                System.out.println("Enter a valid ID !");
-//        } while (true);
-//    }
-//    }
+
+    public void toLogin(MouseEvent event) throws IOException {
+        URL url = new File("src/sample/resource/login.fxml").toURI().toURL();
+        Parent profileParent = FXMLLoader.load(url);
+        Scene profileScene = new Scene(profileParent);
+
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(profileScene);
+        window.setX(450);
+        window.setY(130);
+        window.show();
+    }
 }
 
 

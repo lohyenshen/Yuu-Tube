@@ -23,26 +23,6 @@ public class signUp extends User {
     @FXML private PasswordField passwordSignUp;
     @FXML private PasswordField reConfirmPW;
 
-    public void usernameTF() {
-        System.out.println("Username: " + usernameSignUp.getText());
-    }
-
-    public void emailTF() {
-        System.out.println("Email: " + emailSignUp.getText());
-    }
-
-    public void passwordTF() {
-        System.out.println("Password: " + passwordSignUp.getText());
-    }
-
-    public void reConfirmPWTF() {
-        while (!reConfirmPW.getText().equals(passwordSignUp.getText())) {
-            passwordSignUp.clear();
-        }
-        System.out.println("Error: Valid !!!");
-
-    }
-
     // "Create" button
     public void saveNewUser(ActionEvent event) throws Exception {
         User[] users = UserQuery.getUsers();
@@ -77,23 +57,6 @@ public class signUp extends User {
                 stage.setX(650);
                 stage.setY(300);
                 continue;
-            }
-            for (User user : users) {
-                if (name.equals(user.name)) {
-                    usernameSignUp.clear();
-
-                    isUniqueName = false;
-
-                    URL url = new File("src/sample/resource/Error_toCreateUser.fxml").toURI().toURL();
-                    Parent profileParent = FXMLLoader.load(url);
-                    Scene profileScene = new Scene(profileParent);
-
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(profileScene);
-                    stage.setX(650);
-                    stage.setY(300);
-                    break;
-                }
             }
 
             email = emailSignUp.getText();
@@ -142,7 +105,7 @@ public class signUp extends User {
                 stage.setX(650);
                 stage.setY(300);
            }
-            confirmPassword = reConfirmPW.getText().toString();
+            confirmPassword = reConfirmPW.getText();
             if (!confirmPassword.equals(password)) {
                 reConfirmPW.clear();
                 passwordSignUp.clear();

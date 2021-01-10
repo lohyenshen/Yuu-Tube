@@ -2,8 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -30,7 +29,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <Label layoutX="11.0" layoutY="176.0" text="Delete Video" textFill="WHITE">
+            <Label layoutX="11.0" layoutY="176.0" onMouseClicked="#deleteVideo" text="Delete Video" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
@@ -83,10 +82,13 @@
          </children>
       </Pane>
       <Label layoutX="163.0" layoutY="89.0" text="Subscriber(s)              :" textFill="WHITE" />
-      <Label layoutX="157.0" layoutY="162.0" text="Videos" textFill="WHITE">
+      <Label layoutX="162.0" layoutY="156.0" onMouseClicked="#updateVideo" text="Videos" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Label>
       <Label layoutX="65.0" layoutY="12.0" onMouseClicked="#backTo" prefHeight="34.0" prefWidth="84.0" text="YuuTube" textFill="WHITE">
          <font>
@@ -98,13 +100,6 @@
       </Label>
       <Label layoutX="164.0" layoutY="119.0" text="Video(s)                     :" textFill="WHITE" />
       <Label layoutX="162.0" layoutY="58.0" text="User ID                       :" textFill="WHITE" />
-      <TableView layoutX="157.0" layoutY="193.0" prefHeight="200.0" prefWidth="437.0" style="-fx-background-color: black;">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Video ID(s)" />
-          <TableColumn prefWidth="296.79998779296875" text="Video Name" />
-            <TableColumn prefWidth="63.20001220703125" text="View(s)" />
-        </columns>
-      </TableView>
       <Label fx:id="top" layoutX="244.0" layoutY="11.0" text="User Profile" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
@@ -113,5 +108,29 @@
       <Label fx:id="userID" layoutX="300.0" layoutY="58.0" prefHeight="18.0" prefWidth="85.0" textFill="WHITE" />
       <Label fx:id="numOfSubscribers" layoutX="300.0" layoutY="90.0" prefHeight="18.0" prefWidth="85.0" textFill="WHITE" />
       <Label fx:id="numOfVideos" layoutX="300.0" layoutY="120.0" prefHeight="18.0" prefWidth="85.0" textFill="WHITE" />
+      <Label layoutX="175.0" layoutY="191.0" text="Video ID" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="300.0" layoutY="192.0" text="Video Title" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="442.0" layoutY="192.0" text="Views" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="534.0" layoutY="192.0" text="Likes" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ListView fx:id="videoID" layoutX="151.0" layoutY="210.0" prefHeight="188.0" prefWidth="97.0" style="-fx-background-color: black;" />
+      <ListView fx:id="videoTitle" layoutX="248.0" layoutY="210.0" prefHeight="188.0" prefWidth="166.0" style="-fx-background-color: black;" />
+      <ListView fx:id="views" layoutX="413.0" layoutY="210.0" prefHeight="188.0" prefWidth="91.0" style="-fx-background-color: black;" />
+      <ListView fx:id="likes" layoutX="504.0" layoutY="210.0" prefHeight="188.0" prefWidth="84.0" style="-fx-background-color: black;" />
    </children>
 </AnchorPane>

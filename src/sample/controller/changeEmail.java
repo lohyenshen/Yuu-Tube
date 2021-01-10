@@ -45,6 +45,19 @@ public class changeEmail {
             isUniqueEmail = true;
             newEmail = this.newEmail.getText();
 
+            if (this.newEmail.getText() == null) {
+                URL url = new File("src/sample/resource/Error_changeEmail_noSame.fxml").toURI().toURL();
+                Parent profileParent = FXMLLoader.load(url);
+                Scene profileScene = new Scene(profileParent);
+
+                Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                window.setScene(profileScene);
+                window.setX(500);
+                window.setY(250);
+                window.show();
+                continue;
+            }
+
             if ( oldEmail.equals(newEmail)){
                 //System.out.println("New email CANNOT BE THE SAME as current email !");
                 URL url = new File("src/sample/resource/Error_changeEmail_noSame.fxml").toURI().toURL();
@@ -101,8 +114,8 @@ public class changeEmail {
 
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(profileScene);
-        window.setX(450);
-        window.setY(130);
+        window.setX(600);
+        window.setY(250);
         window.show();
         Main.userOn = true;
     }

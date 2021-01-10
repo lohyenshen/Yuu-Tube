@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.deleteVideo">
+   <children>
+      <ImageView fitHeight="55.0" fitWidth="65.0" layoutX="12.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/111.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="67.0" layoutY="16.0" text="Yuutube" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <ListView fx:id="videoID" layoutX="48.0" layoutY="121.0" prefHeight="200.0" prefWidth="55.0" style="-fx-background-color: white;" />
+      <Button layoutX="134.0" layoutY="335.0" mnemonicParsing="false" onAction="#showVideoDetails" style="-fx-background-color: white;" text="Show Video Details">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="295.0" layoutY="146.0" text="Enter a video ID to delete the video" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="deleteVideoSelect" alignment="CENTER" layoutX="372.0" layoutY="208.0" prefHeight="26.0" prefWidth="110.0" style="-fx-background-radius: 10;" />
+      <Button layoutX="48.0" layoutY="335.0" mnemonicParsing="false" onAction="#backToProfile" prefHeight="26.0" prefWidth="55.0" style="-fx-background-color: white;" text="Cancel">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="44.0" fitWidth="40.0" layoutX="408.0" layoutY="269.0" onMouseClicked="#deleteVideo" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/dd.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ListView fx:id="videoTitle" layoutX="103.0" layoutY="121.0" prefHeight="200.0" prefWidth="149.0" style="-fx-background-color: white;" />
+      <Label layoutX="52.0" layoutY="95.0" text="Video ID" textFill="WHITE" />
+      <Label layoutX="166.0" layoutY="95.0" text="Title" textFill="WHITE" />
+   </children>
+</AnchorPane>

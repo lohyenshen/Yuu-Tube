@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="148.0" prefWidth="298.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Notification_accountCreated">
+<AnchorPane prefHeight="134.0" prefWidth="298.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Notification_accountCreated">
     <children>
         <Label layoutX="89.0" layoutY="40.0" text="Account Created Successfully !!!" textFill="WHITE">
             <font>

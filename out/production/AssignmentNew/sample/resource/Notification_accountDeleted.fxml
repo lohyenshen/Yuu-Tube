@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="139.0" prefWidth="298.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Notification_accountDeleted">
+<AnchorPane prefHeight="131.0" prefWidth="298.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Notification_accountDeleted">
     <children>
-        <Label layoutX="91.0" layoutY="40.0" text="Account Deleted Successfully !!!" textFill="WHITE">
+        <Label layoutX="81.0" layoutY="44.0" text="Account Deleted Successfully !!!" textFill="WHITE">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <ImageView fitHeight="55.0" fitWidth="63.0" layoutX="28.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="55.0" fitWidth="63.0" layoutX="18.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../Photo/tt.png" />
             </image>

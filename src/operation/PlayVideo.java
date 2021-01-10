@@ -57,7 +57,7 @@ public class PlayVideo {
             player.destroy();
     }
     public static void likes_Dislikes_Operation( User currentUser, Video currentVideo, boolean ld) throws Exception{
-        // ld      =           likedislike  (to like  or to dislike  based on current user operation)
+        // ld      =          likedislike  (to like   or to dislike  based on current user operation)
         // status  = database_likedislike  (    liked or    disliked based on data in database)
         //
         // ld      = true  (user wants to like)

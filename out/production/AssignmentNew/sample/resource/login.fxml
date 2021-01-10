@@ -44,5 +44,18 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <ImageView fitHeight="33.0" fitWidth="31.0" layoutX="562.0" layoutY="362.0" onMouseClicked="#toHomePage" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/login.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="455.0" layoutY="369.0" onMouseClicked="#toHomePage" text="Back to Home Page" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
    </children>
 </AnchorPane>

@@ -22,12 +22,10 @@ import java.net.URL;
 
 public class login extends homePage {
 
-    @FXML
-    protected TextField emailLogin;
-    @FXML
-    private PasswordField passwordLogin;
-    public static User loginUser;
+    @FXML protected TextField emailLogin;
+    @FXML private PasswordField passwordLogin;
 
+    public static User loginUser;
 
     public User getLoginUser() {
         return loginUser;
@@ -60,6 +58,8 @@ public class login extends homePage {
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             window.setScene(profileScene);
             window.show();
+            Main.userOn = true;
+            loginUser = currentUser;
         }
         else{
             emailLogin.clear();
@@ -76,8 +76,6 @@ public class login extends homePage {
             window.setY(280);
         }
         loginUser = currentUser;
-        //setUsernameHomePage(UserQuery.getUser(loginUser.getUserID()));
-        Main.userOn = true;
     }
 
     public void toSignUp(MouseEvent event) throws Exception {
@@ -85,9 +83,19 @@ public class login extends homePage {
         Parent profileParent = FXMLLoader.load(url);
         Scene profileScene = new Scene(profileParent);
 
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(profileScene);
+        window.show();
+    }
+
+    public void toHomePage(MouseEvent event) throws IOException {
+        URL url = new File("src/sample/resource/homePage.fxml").toURI().toURL();
+        Parent profileParent = FXMLLoader.load(url);
+        Scene profileScene = new Scene(profileParent);
+
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(profileScene);
         window.show();
-
+        Main.userOn = false;
     }
 }
