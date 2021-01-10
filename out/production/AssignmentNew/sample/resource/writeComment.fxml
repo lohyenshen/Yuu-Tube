@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="278.0" prefWidth="441.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.writeComment">
+<AnchorPane prefHeight="278.0" prefWidth="441.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.WriteComment">
    <children>
       <Button layoutX="264.0" layoutY="227.0" mnemonicParsing="false" onAction="#Notification_commentAdded" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: white;" text="Enter">
          <cursor>

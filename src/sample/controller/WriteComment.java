@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class writeComment {
+public class WriteComment {
     @FXML
     private TextArea commentText;
 
@@ -45,7 +45,7 @@ public class writeComment {
         Video[] videos = VideoQuery.getVideos();
 
         for (int j = 0; j < videos.length; j++) {
-            if (videos[j].getVideoID() == homePage.currentVideoPlaying.getVideoID()) {
+            if (videos[j].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
                 String[] oldComments = videos[j].getComments();
 
                 // StringBuilder is faster than String concatenation
@@ -55,7 +55,7 @@ public class writeComment {
                     s.append("\n");
                 }
                 String newComments = s.toString() + commentText.getText() + "\n";
-                VideoQuery.updateComments(newComments, homePage.currentVideoPlaying.getVideoID());
+                VideoQuery.updateComments(newComments, HomePage.currentVideoPlaying.getVideoID());
             }
         }
     }

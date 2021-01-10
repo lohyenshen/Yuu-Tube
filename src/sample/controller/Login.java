@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 
 
-public class login extends homePage {
+public class Login extends HomePage {
 
     @FXML protected TextField emailLogin;
     @FXML private PasswordField passwordLogin;
@@ -41,8 +40,8 @@ public class login extends homePage {
         User[] users = UserQuery.getUsers();
 
         for (User user : users) {
-            if (emailEntered.equals(user.email)) {                  // email    in database
-                if (passwordEntered.equals(user.password)) {        // password in database
+            if (emailEntered.equals(user.getEmail())) {                  // email    in database
+                if (passwordEntered.equals(user.getPassword())) {        // password in database
                     currentUser = user;
                     userExist = true;
                     break;

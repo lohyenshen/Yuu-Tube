@@ -2,16 +2,11 @@ package sample.controller;
 
 import app.*;
 import database.*;
-import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import operation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.MediaView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -29,11 +23,9 @@ import sample.Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
-public class homePage extends MyUsersProfile {
+public class HomePage extends MyUsersProfile {
     @FXML protected Label video1;
     @FXML private Label video2;
     @FXML private Label video3;
@@ -138,7 +130,7 @@ public class homePage extends MyUsersProfile {
         }
 
         if (Main.userOn) {
-            usernameHomePage.setText(login.loginUser.getName());
+            usernameHomePage.setText(Login.loginUser.getName());
             loginWord.setText("");
             loginImage.setVisible(false);
         } else {
@@ -180,27 +172,27 @@ public class homePage extends MyUsersProfile {
                         @Override
                         protected Void call() throws Exception {
                             if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
-                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[0]);
+                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[0]);
                                 tempID = VideoQuery.getTrendingVideos()[0].getVideoID();
                                 currentVideoPlaying = VideoQuery.getTrendingVideos()[0];
 
                             } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
-                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[1]);
+                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[1]);
                                 tempID = VideoQuery.getTrendingVideos()[1].getVideoID();
                                 currentVideoPlaying = VideoQuery.getTrendingVideos()[1];
 
                             } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
-                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[2]);
+                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[2]);
                                 tempID = VideoQuery.getTrendingVideos()[2].getVideoID();
                                 currentVideoPlaying = VideoQuery.getTrendingVideos()[2];
 
                             } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
-                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[3]);
+                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[3]);
                                 tempID = VideoQuery.getTrendingVideos()[3].getVideoID();
                                 currentVideoPlaying = VideoQuery.getTrendingVideos()[3];
 
                             } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
-                                PlayVideo.withLogin(login.loginUser, VideoQuery.getTrendingVideos()[4]);
+                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[4]);
                                 tempID = VideoQuery.getTrendingVideos()[4].getVideoID();
                                 currentVideoPlaying = VideoQuery.getTrendingVideos()[4];
 

@@ -1,32 +1,24 @@
 package sample.controller;
 
 import app.User;
-import database.Query;
 import database.SearchQuery;
-import database.SubscriberQuery;
 import database.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.Scanner;
 
-public class searchUser {
+public class SearchUser {
     @FXML private TextField userWords;
     @FXML private ListView userID_search;
     @FXML private ListView username_search;
@@ -61,9 +53,9 @@ public class searchUser {
             stage.setY(250);
         }
 
-        User[] searchedUsers = SearchQuery.searchUsers(s, login.loginUser);
+        User[] searchedUsers = SearchQuery.searchUsers(s, Login.loginUser);
         for (int i = 0; i < searchedUsers.length; i++) {
-            if (searchedUsers[i].getUserID() == login.loginUser.getUserID()) {
+            if (searchedUsers[i].getUserID() == Login.loginUser.getUserID()) {
                 continue;
             } else {
                 userID_search.getItems().add(searchedUsers[i].getUserID());

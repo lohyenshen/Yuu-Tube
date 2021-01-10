@@ -1,16 +1,14 @@
 package app;
-import GUI.*;
 import database.*;
+
 import java.io.File;
 import java.util.Scanner;
-
-//import sample.controller.*;
 public class User {
     private int userID;               // unique, auto_increased, PRIMARY KEY in database
 
-    public String name;
-    public String email;
-    public String password;
+    private String name;
+    private String email;
+    private String password;
     private int videosCount;
     private int subscribersCount;
     private Video[] videos;
@@ -18,8 +16,6 @@ public class User {
     // for SearchQuery only
     private boolean subscribed;
 
-    public User() {
-    }
 
     // constructor
     public User(int userID, String name, String email, String password, int videosCount, int subscribersCount, Video[] videos) {
@@ -75,6 +71,17 @@ public class User {
         return subscribed;
     }
 
+    // setters
+
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     // toString
     public String toString(){
         // for fun, depends on GUI
@@ -111,7 +118,7 @@ public class User {
             System.out.println("-----Account NOT CREATED -----");
         }
     }
-    public static User createUniqueUser() throws Exception{
+    private static User createUniqueUser() throws Exception{
         // this method ensures all new users are unique (name, email) are not duplicated
         // by comparing (entered details) with (details extracted from database0
 
@@ -189,19 +196,10 @@ public class User {
         boolean userExist = false;
         User currentUser = null;
 
-        Login_Form login = new Login_Form() ;
-        String emailEntered = null;
-        String passwordEntered = null;
-
-        login.main();
-        do{
-            System.out.print("");
-            if(login.exit()){
-                emailEntered = login.getEmail();
-                passwordEntered = login.getPassword();
-                break;
-            }
-        }while(true);
+        System.out.print("Enter email : ");
+        String emailEntered = sc.nextLine();
+        System.out.print("Enter password: ");
+        String passwordEntered = sc.nextLine();
 
         User[] users = UserQuery.getUsers();
 
