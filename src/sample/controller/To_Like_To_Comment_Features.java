@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class toLike_toComment_Features {
+public class To_Like_To_Comment_Features {
     @FXML private Button toSearchVideo;
     @FXML private Button toSearchUser;
     @FXML private ImageView profileEnter;
@@ -45,7 +45,7 @@ public class toLike_toComment_Features {
 
     public void displayUsernameAfterLogin_trendingVideos(MouseEvent event) {
         if (Main.userOn) {
-            usernameHomePage.setText(login.loginUser.getName());
+            usernameHomePage.setText(Login.loginUser.getName());
         } else {
             usernameHomePage.setText("Not login");
         }
@@ -129,10 +129,10 @@ public class toLike_toComment_Features {
     }
 
     public void pressLike(MouseEvent event) throws Exception {
-        boolean past = LikeDislikeQuery.likedDisliked(login.loginUser.getUserID(), homePage.currentVideoPlayingID);
+        boolean past = LikeDislikeQuery.likedDisliked(Login.loginUser.getUserID(), HomePage.currentVideoPlayingID);
 
         if (past) {
-            boolean status = LikeDislikeQuery.getStatus( login.loginUser.getUserID() , homePage.currentVideoPlayingID);
+            boolean status = LikeDislikeQuery.getStatus( Login.loginUser.getUserID() , HomePage.currentVideoPlayingID);
             if (status) {     // user liked the video before, so cannot like again, only dislike
 //                System.out.println("You can't like the video as you liked it before");
                 like_dislike_comment.setText("You already liked it ");
@@ -140,18 +140,18 @@ public class toLike_toComment_Features {
 
             } else {        // user disliked the video before, so cannot dislike again, only like
                 // update dislike to like
-                LikeDislikeQuery.update(login.loginUser.getUserID(), homePage.currentVideoPlayingID, 1);
+                LikeDislikeQuery.update(Login.loginUser.getUserID(), HomePage.currentVideoPlayingID, 1);
                 like_dislike_comment.setText("You successfully liked the video!!! :)");
                 like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
-                VideoQuery.updateLikesDislikesCount(homePage.currentVideoPlayingID);
+                VideoQuery.updateLikesDislikesCount(HomePage.currentVideoPlayingID);
 
                 User[] users = UserQuery.getUsers();
                 Video[] videos = VideoQuery.getVideos();
                 int like = 0;
                 for (int i = 0; i < users.length; i++) {
-                    if (homePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
+                    if (HomePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
                         for (int x = 0; x < videos.length; x++) {
-                            if (videos[x].getVideoID() == homePage.currentVideoPlaying.getVideoID()) {
+                            if (videos[x].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
                                 like = videos[x].getLikesCount();
                                 likes.setText(Integer.toString(like));
                             }
@@ -160,7 +160,7 @@ public class toLike_toComment_Features {
                 }
             }
         } else {
-            LikeDislikeQuery.insertNew( login.loginUser.getUserID() , homePage.currentVideoPlayingID, 1);
+            LikeDislikeQuery.insertNew( Login.loginUser.getUserID() , HomePage.currentVideoPlayingID, 1);
             like_dislike_comment.setText("You successfully liked the video!!! :)");
             like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
 
@@ -168,9 +168,9 @@ public class toLike_toComment_Features {
             Video[] videos = VideoQuery.getVideos();
             int like = 0;
             for (int i = 0; i < users.length; i++) {
-                if (homePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
+                if (HomePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
                     for (int x = 0; x < videos.length; x++) {
-                        if (videos[x].getVideoID() == homePage.currentVideoPlaying.getVideoID()) {
+                        if (videos[x].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
                             like = videos[x].getLikesCount();
                             likes.setText("1");
                         }
@@ -178,15 +178,15 @@ public class toLike_toComment_Features {
                 }
             }
         }
-        VideoQuery.updateLikesDislikesCount(homePage.currentVideoPlayingID);
+        VideoQuery.updateLikesDislikesCount(HomePage.currentVideoPlayingID);
     }
 
     public void pressDislike(MouseEvent event) throws Exception {
         like_dislike_comment.setText("You have just disliked the video!!! :(");
-        boolean past = LikeDislikeQuery.likedDisliked(login.loginUser.getUserID(), homePage.currentVideoPlayingID);
+        boolean past = LikeDislikeQuery.likedDisliked(Login.loginUser.getUserID(), HomePage.currentVideoPlayingID);
 
         if (past) {
-            boolean status = LikeDislikeQuery.getStatus( login.loginUser.getUserID() , homePage.currentVideoPlayingID);
+            boolean status = LikeDislikeQuery.getStatus( Login.loginUser.getUserID() , HomePage.currentVideoPlayingID);
             if (!status) {     // user liked the video before, so cannot like again, only dislike
                 System.out.println("You can't dislike the video as you disliked it before");
                 like_dislike_comment.setText("You already disliked it ");
@@ -194,18 +194,18 @@ public class toLike_toComment_Features {
 
             } else {        // user disliked the video before, so cannot dislike again, only like
                 // update dislike to like
-                LikeDislikeQuery.update(login.loginUser.getUserID(), homePage.currentVideoPlayingID, 0);
+                LikeDislikeQuery.update(Login.loginUser.getUserID(), HomePage.currentVideoPlayingID, 0);
                 like_dislike_comment.setText("You have just disliked the video!!! :(");
                 like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
-                VideoQuery.updateLikesDislikesCount(homePage.currentVideoPlayingID);
+                VideoQuery.updateLikesDislikesCount(HomePage.currentVideoPlayingID);
 
                 User[] users = UserQuery.getUsers();
                 Video[] videos = VideoQuery.getVideos();
                 int like = 0;
                 for (int i = 0; i < users.length; i++) {
-                    if (homePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
+                    if (HomePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
                         for (int x = 0; x < videos.length; x++) {
-                            if (videos[x].getVideoID() == homePage.currentVideoPlaying.getVideoID()) {
+                            if (videos[x].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
                                 like = videos[x].getLikesCount();
                                 likes.setText(Integer.toString(like));
                             }
@@ -214,7 +214,7 @@ public class toLike_toComment_Features {
                 }
             }
         } else {
-            LikeDislikeQuery.insertNew( login.loginUser.getUserID() , homePage.currentVideoPlayingID, 0);
+            LikeDislikeQuery.insertNew( Login.loginUser.getUserID() , HomePage.currentVideoPlayingID, 0);
             like_dislike_comment.setText("You have just disliked the video!!! :(");
             like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
 
@@ -222,9 +222,9 @@ public class toLike_toComment_Features {
             Video[] videos = VideoQuery.getVideos();
             int like = 0;
             for (int i = 0; i < users.length; i++) {
-                if (homePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
+                if (HomePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
                     for (int x = 0; x < videos.length; x++) {
-                        if (videos[x].getVideoID() == homePage.currentVideoPlaying.getVideoID()) {
+                        if (videos[x].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
                             like = videos[x].getLikesCount();
                             likes.setText(Integer.toString(like));
                         }
@@ -232,7 +232,7 @@ public class toLike_toComment_Features {
                 }
             }
         }
-        VideoQuery.updateLikesDislikesCount(homePage.currentVideoPlayingID);
+        VideoQuery.updateLikesDislikesCount(HomePage.currentVideoPlayingID);
     }
 
     public void pressComment(MouseEvent event) throws IOException {
@@ -258,9 +258,9 @@ public class toLike_toComment_Features {
         Video[] videos = VideoQuery.getVideos();
 
         for (int i = 0; i < users.length; i++) {
-            if (homePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
+            if (HomePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
                 for (int x = 0; x < videos.length; x++) {
-                    if (videos[x].getVideoID() == homePage.currentVideoPlaying.getVideoID()) {
+                    if (videos[x].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
                         view = videos[x].getViewsCount();
                         like = videos[x].getLikesCount();
                         title = videos[x].getTitle();
@@ -268,7 +268,7 @@ public class toLike_toComment_Features {
                         videoTitle.setText(title);
                         views.setText(Integer.toString(view));
                         likes.setText(Integer.toString(like));
-                        userID.setText(Integer.toString(homePage.currentVideoPlaying.getUserID()));
+                        userID.setText(Integer.toString(HomePage.currentVideoPlaying.getUserID()));
 
                     }
                 }
@@ -276,7 +276,7 @@ public class toLike_toComment_Features {
         }
 
         for (int j = 0; j < videos.length; j++) {
-            if (videos[j].getVideoID() == homePage.currentVideoPlaying.getVideoID()) {
+            if (videos[j].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
                 String[] oldComments = videos[j].getComments();
 
                 // StringBuilder is faster than String concatenation
@@ -300,7 +300,7 @@ public class toLike_toComment_Features {
                     @Override
                     protected Void call() throws Exception {
                         for (int i = 0; i < VideoQuery.getVideos().length; i++) {
-                            PlayVideo.withLogin(login.loginUser,homePage.currentVideoPlaying);
+                            PlayVideo.withLogin(Login.loginUser, HomePage.currentVideoPlaying);
                         }
                         return null;
                     }
@@ -323,9 +323,9 @@ public class toLike_toComment_Features {
         ArrayList<Video> sv = new ArrayList<Video>();
 
         for (int i = 0; i < users.length; i++) {
-            if (homePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
+            if (HomePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
                 for (int x = 0; x < videos.length; x++) {
-                        if (videos[x].getVideoID() == homePage.currentVideoPlaying.getVideoID()) {
+                        if (videos[x].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
                             view = videos[x].getViewsCount();
                             views.setText(Integer.toString(view));
                         }

@@ -14,14 +14,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import operation.DeleteVideo;
 import sample.Main;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class deleteVideo {
+public class DeleteVideo_GUI {
     @FXML private ListView videoID;
     @FXML private ListView videoTitle;
     @FXML private TextField deleteVideoSelect;
@@ -46,7 +45,7 @@ public class deleteVideo {
         Video[] videos = VideoQuery.getVideos();
 
         for (int i = 0; i < users.length; i++) {
-            if (login.loginUser.getUserID() == users[i].getUserID()) {
+            if (Login.loginUser.getUserID() == users[i].getUserID()) {
                 for (int x = 0; x < videos.length; x++) {
                     for (int j = 0; j < users[i].getVideos().length; j++) {
                         if (users[i].getVideos()[j].getVideoID() == videos[x].getVideoID()) {
@@ -66,11 +65,11 @@ public class deleteVideo {
         User[] users = UserQuery.getUsers();
         Video[] videos = VideoQuery.getVideos();
         for (int i = 0; i < users.length; i++) {
-            if (login.loginUser.getUserID() == users[i].getUserID()) {
+            if (Login.loginUser.getUserID() == users[i].getUserID()) {
                 for (int x = 0; x < videos.length; x++) {
                     for (int j = 0; j < users[i].getVideos().length; j++) {
                         if (Integer.parseInt(deleteVideoSelect.getText()) == videos[x].getVideoID()) {
-                            DeleteVideo.delete(users[i], videos[x]);
+                            operation.DeleteVideo.delete(users[i], videos[x]);
                         }
                     }
                 }

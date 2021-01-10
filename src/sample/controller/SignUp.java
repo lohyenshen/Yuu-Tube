@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class signUp extends User {
+public class SignUp {
     @FXML private TextField usernameSignUp;
     @FXML private TextField emailSignUp;
     @FXML private PasswordField passwordSignUp;
@@ -77,7 +77,24 @@ public class signUp extends User {
                 continue;
             }
             for (User user : users) {
-                if (email.equals(user.email)) {
+                if (name.equals(user.getName())) {
+                    usernameSignUp.clear();
+
+                    isUniqueName = false;
+
+                    URL url = new File("src/sample/resource/Error_toCreateUser.fxml").toURI().toURL();
+                    Parent profileParent = FXMLLoader.load(url);
+                    Scene profileScene = new Scene(profileParent);
+
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(profileScene);
+                    stage.setX(650);
+                    stage.setY(300);
+                    break;
+                }
+            }
+            for (User user : users) {
+                if (email.equals(user.getEmail())) {
                     emailSignUp.clear();
 
                     isUniqueEmail = false;

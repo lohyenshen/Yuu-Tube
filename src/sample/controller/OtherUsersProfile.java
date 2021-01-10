@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class OtherUsersProfile {
     @FXML private Label otherUsername;
@@ -60,7 +58,7 @@ public class OtherUsersProfile {
         String name = "";
         User[] users = UserQuery.getUsers();
         for (int i = 0; i < users.length; i++) {
-            if (searchUser.tempUser.getUserID() == users[i].getUserID()) {
+            if (SearchUser.tempUser.getUserID() == users[i].getUserID()) {
                 userIDD = users[i].getUserID();
                 name = users[i].getName();
                 sub = users[i].getSubscribersCount();
@@ -72,7 +70,7 @@ public class OtherUsersProfile {
             }
         }
 
-        if (SubscriberQuery.subscribedTo(login.loginUser.getUserID(), searchUser.tempUser.getUserID())) {
+        if (SubscriberQuery.subscribedTo(Login.loginUser.getUserID(), SearchUser.tempUser.getUserID())) {
             subscribeButton.setStyle("-fx-background-color: #808080;");
             subscribeButton.setText("Subscribed");
         } else {
@@ -89,10 +87,10 @@ public class OtherUsersProfile {
         ArrayList<Video> sv = new ArrayList<Video>();
 
         for (int i = 0; i < users.length; i++) {
-            if (searchUser.tempUser.getUserID() == users[i].getUserID()) {
+            if (SearchUser.tempUser.getUserID() == users[i].getUserID()) {
                 for (int x = 0; x < videos.length; x++) {
-                    for (int j = 0; j < searchUser.tempUser.getVideos().length; j++) {
-                        if (videos[x].getVideoID() == searchUser.tempUser.getVideos()[j].getVideoID()) {
+                    for (int j = 0; j < SearchUser.tempUser.getVideos().length; j++) {
+                        if (videos[x].getVideoID() == SearchUser.tempUser.getVideos()[j].getVideoID()) {
                             videoIDD = videos[x].getVideoID();
                             view = videos[x].getViewsCount();
                             like = videos[x].getLikesCount();
@@ -113,8 +111,8 @@ public class OtherUsersProfile {
 
         for (int i = 0; i < VideoQuery.getVideos().length; i++) {
             if (Integer.parseInt(c) == VideoQuery.getVideos()[i].getVideoID()) {
-                homePage.currentVideoPlaying = VideoQuery.getVideos()[i];
-                homePage.currentVideoPlayingID = VideoQuery.getVideos()[i].getVideoID();
+                HomePage.currentVideoPlaying = VideoQuery.getVideos()[i];
+                HomePage.currentVideoPlayingID = VideoQuery.getVideos()[i].getVideoID();
             }
         }
         backgroundThread = new Service<Void>() {
@@ -127,7 +125,7 @@ public class OtherUsersProfile {
                     protected Void call() throws Exception {
                         for (int i = 0; i < VideoQuery.getVideos().length; i++) {
                             if (Integer.parseInt(c) == VideoQuery.getVideos()[i].getVideoID()) {
-                                PlayVideo.withLogin(login.loginUser,VideoQuery.getVideos()[i]);
+                                PlayVideo.withLogin(Login.loginUser,VideoQuery.getVideos()[i]);
                             }
                         }
                         return null;
@@ -154,31 +152,31 @@ public class OtherUsersProfile {
     }
 
     public void toSubscribe(ActionEvent event) throws Exception {
-        boolean subscribe = searchUser.tempUser.getSubscribed();
-        if (!SubscriberQuery.subscribedTo(login.loginUser.getUserID(), searchUser.tempUser.getUserID())) {
+        boolean subscribe = SearchUser.tempUser.getSubscribed();
+        if (!SubscriberQuery.subscribedTo(Login.loginUser.getUserID(), SearchUser.tempUser.getUserID())) {
 
             // insert a new record where "currentUser" subscribes to "searchedUser"
-            SubscriberQuery.insertNew(login.loginUser.getUserID(), searchUser.tempUser.getUserID());
+            SubscriberQuery.insertNew(Login.loginUser.getUserID(), SearchUser.tempUser.getUserID());
 
             // increase subscribersCount of the searchedUser
-            Query.increase("user", "subscribersCount", 1, "userID", searchUser.tempUser.getUserID());
+            Query.increase("user", "subscribersCount", 1, "userID", SearchUser.tempUser.getUserID());
 
-            System.out.println("SUBSCRIBED successfully to " + searchUser.tempUser.getName());
+            System.out.println("SUBSCRIBED successfully to " + SearchUser.tempUser.getName());
             subscribeButton.setText("Subscribed");
             subscribeButton.setStyle("-fx-background-color: #808080; ");
-            otherUserNumOfSubscriber.setText(Integer.toString(searchUser.tempUser.getSubscribersCount() + 1));
+            otherUserNumOfSubscriber.setText(Integer.toString(SearchUser.tempUser.getSubscribersCount() + 1));
 
-        } else if (SubscriberQuery.subscribedTo(login.loginUser.getUserID(), searchUser.tempUser.getUserID())) {
+        } else if (SubscriberQuery.subscribedTo(Login.loginUser.getUserID(), SearchUser.tempUser.getUserID())) {
             // delete the record where "currentUser" subscribes to "searchedUser"
-            SubscriberQuery.delete( login.loginUser.getUserID() , searchUser.tempUser.getUserID() );
+            SubscriberQuery.delete( Login.loginUser.getUserID() , SearchUser.tempUser.getUserID() );
 
             // decrease subscribersCount of the searchedUser
-            Query.decrease("user", "subscribersCount",  1, "userID", searchUser.tempUser.getUserID());
-            System.out.println("UNSUBSCRIBED successfully from " + searchUser.tempUser.getName());
+            Query.decrease("user", "subscribersCount",  1, "userID", SearchUser.tempUser.getUserID());
+            System.out.println("UNSUBSCRIBED successfully from " + SearchUser.tempUser.getName());
 
             subscribeButton.setText("Subscribe");
             subscribeButton.setStyle("-fx-background-color: #ff0000; ");
-            otherUserNumOfSubscriber.setText(Integer.toString(searchUser.tempUser.getSubscribersCount() - 1));
+            otherUserNumOfSubscriber.setText(Integer.toString(SearchUser.tempUser.getSubscribersCount() - 1));
         }
     }
 }

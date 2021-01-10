@@ -15,9 +15,8 @@ import sample.Main;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Scanner;
 
-public class changeEmail {
+public class ChangeEmail {
 
     @FXML private TextField newEmail;
 
@@ -38,7 +37,7 @@ public class changeEmail {
         User[] users = UserQuery.getUsers();
 
         System.out.println("-----CHANGING TO NEW EMAIL   -----");
-        String oldEmail = login.loginUser.getEmail();
+        String oldEmail = Login.loginUser.getEmail();
         String newEmail;
         boolean isUniqueEmail;
         do {
@@ -87,7 +86,7 @@ public class changeEmail {
                 continue;
             }
             for (User user : users) {
-                if (newEmail.equals(user.email)) {
+                if (newEmail.equals(user.getEmail())) {
                     //System.out.println("THIS EMAIL IS TAKEN! ");
                     URL url = new File("src/sample/resource/Error_changeEmail_emailTaken.fxml").toURI().toURL();
                     Parent profileParent = FXMLLoader.load(url);
@@ -104,8 +103,8 @@ public class changeEmail {
             }
         } while (!isUniqueEmail) ;
 
-        login.loginUser.email = newEmail;
-        UserQuery.changeEmail(login.loginUser);
+        Login.loginUser.setEmail( newEmail );
+        UserQuery.changeEmail(Login.loginUser);
 //        System.out.println("-----Email changed successfully   -----");
 //        System.out.println("-----Please login again          (A)-----");
         URL url = new File("src/sample/resource/Notification_emailChanged.fxml").toURI().toURL();

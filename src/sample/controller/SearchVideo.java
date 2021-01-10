@@ -1,16 +1,11 @@
 package sample.controller;
 
 import app.Video;
-import javafx.beans.property.Property;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import operation.*;
 import database.*;
 import javafx.event.ActionEvent;
@@ -20,16 +15,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 
-public class searchVideo extends homePage  {
+public class SearchVideo extends HomePage {
     @FXML private TextField videoIDToPlayVideo;
     @FXML private TextField searchVideoText;
     @FXML private Button searchVideoButton;
@@ -93,8 +86,8 @@ public class searchVideo extends homePage  {
 
         for (int i = 0; i < VideoQuery.getVideos().length; i++) {
             if (Integer.parseInt(op) == VideoQuery.getVideos()[i].getVideoID()) {
-                homePage.currentVideoPlayingID = VideoQuery.getVideos()[i].getVideoID();
-                homePage.currentVideoPlaying = VideoQuery.getVideos()[i];
+                HomePage.currentVideoPlayingID = VideoQuery.getVideos()[i].getVideoID();
+                HomePage.currentVideoPlaying = VideoQuery.getVideos()[i];
             }
         }
 
@@ -108,7 +101,7 @@ public class searchVideo extends homePage  {
                     protected Void call() throws Exception {
                         for (int i = 0; i < VideoQuery.getVideos().length; i++) {
                             if (Integer.parseInt(op) == VideoQuery.getVideos()[i].getVideoID()) {
-                                PlayVideo.withLogin( login.loginUser, VideoQuery.getVideos()[i] );
+                                PlayVideo.withLogin( Login.loginUser, VideoQuery.getVideos()[i] );
                             }
                         }
                         return null;

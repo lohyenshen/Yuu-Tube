@@ -1,21 +1,15 @@
 package sample.controller;
 
 import app.*;
-import database.Query;
-import database.SearchQuery;
 import database.UserQuery;
 import database.VideoQuery;
 import javafx.scene.control.ListView;
-import javafx.scene.input.KeyEvent;
-import operation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import operation.UploadVideo;
@@ -27,7 +21,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class MyUsersProfile{
 
@@ -56,12 +49,12 @@ public class MyUsersProfile{
 
     public void update() throws Exception {
         if (Main.userOn) {
-            UserQuery.getUser(login.loginUser.getUserID());
-            VideoQuery.getVideos(login.loginUser.getUserID());
-            userID.setText(Integer.toString(login.loginUser.getUserID()));
-            numOfSubscribers.setText(Integer.toString(login.loginUser.getSubscribersCount()));
-            numOfVideos.setText(Integer.toString(login.loginUser.getVideosCount()));
-            usernameProfile.setText(login.loginUser.getName());
+            UserQuery.getUser(Login.loginUser.getUserID());
+            VideoQuery.getVideos(Login.loginUser.getUserID());
+            userID.setText(Integer.toString(Login.loginUser.getUserID()));
+            numOfSubscribers.setText(Integer.toString(Login.loginUser.getSubscribersCount()));
+            numOfVideos.setText(Integer.toString(Login.loginUser.getVideosCount()));
+            usernameProfile.setText(Login.loginUser.getName());
 
         } else {
             userID.setText("");
@@ -100,7 +93,7 @@ public class MyUsersProfile{
         User[] users = UserQuery.getUsers();
 
         for (int i = 0; i < users.length; i++) {
-            if (login.loginUser.getUserID() == users[i].getUserID()) {
+            if (Login.loginUser.getUserID() == users[i].getUserID()) {
                 userIDD = users[i].getUserID();
                 sub = users[i].getSubscribersCount();
                 video = users[i].getVideosCount();
@@ -228,13 +221,13 @@ public class MyUsersProfile{
                         // all new videos has 0 likesCount, 0 dislikesCount, 0 viewsCount, "" comment
                         // videoID's ACTUAL VALUE will be handled by MySQL auto increment feature
                         int videoID = 0;
-                        int userID = login.loginUser.getUserID();
+                        int userID = Login.loginUser.getUserID();
                         String title = FilenameUtils.removeExtension(f.getName());
                         int likesCount = 0;
                         int dislikesCount = 0;
                         int viewsCount = 0;
                         String[] comments = null;
-                        String path = login.loginUser.getName() + "\\" + f.getName();
+                        String path = Login.loginUser.getName() + "\\" + f.getName();
 
                         Video video = new Video(videoID, userID, title, likesCount, dislikesCount, viewsCount, comments, path);
                         // insert video details into database
@@ -258,7 +251,7 @@ public class MyUsersProfile{
                         System.out.println();
                         System.out.println("Upload video done! ");
                         System.out.println("Title             = " + title);
-                        System.out.println("Uploaded by       = " + login.loginUser.getName());
+                        System.out.println("Uploaded by       = " + Login.loginUser.getName());
                     }
                 }
             }
@@ -283,7 +276,7 @@ public class MyUsersProfile{
         Video[] videos = VideoQuery.getVideos();
 
         for (int i = 0; i < users.length; i++) {
-            if (login.loginUser.getUserID() == users[i].getUserID()) {
+            if (Login.loginUser.getUserID() == users[i].getUserID()) {
                 for (int x = 0; x < videos.length; x++) {
                     for (int j = 0; j < users[i].getVideos().length; j++) {
                         if (users[i].getVideos()[j].getVideoID() == videos[x].getVideoID()) {

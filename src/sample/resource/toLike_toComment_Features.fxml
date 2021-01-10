@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" onMouseMoved="#displayUsernameAfterLogin_trendingVideos" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.toLike_toComment_Features">
+<AnchorPane fx:id="anchorPane" onMouseMoved="#displayUsernameAfterLogin_trendingVideos" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.To_Like_To_Comment_Features">
     <children>
         <Pane layoutY="1.0" prefHeight="64.0" prefWidth="600.0">
             <children>

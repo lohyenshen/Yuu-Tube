@@ -6,7 +6,6 @@ import database.LikeDislikeQuery;
 import database.SubscriberQuery;
 import database.UserQuery;
 import database.VideoQuery;
-import operation.DeleteAccount;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -35,7 +34,7 @@ public class Confirmation_deleteAccount {
     }
 
     public void deleteAccount(ActionEvent event) throws Exception {
-        for (Video video : login.loginUser.getVideos())
+        for (Video video : Login.loginUser.getVideos())
             System.out.println(video.toString());
 
         /**
@@ -43,7 +42,7 @@ public class Confirmation_deleteAccount {
          *      deletes all records in                   "subscriber" table that contains currentUser's ID
          *      updates subscribersCount of all users in "user" table
          */
-        SubscriberQuery.deleteAcc(login.loginUser.getUserID());
+        SubscriberQuery.deleteAcc(Login.loginUser.getUserID());
         User[] users = UserQuery.getUsers();
         for (User user : users)
             UserQuery.updateSubscribersCount(user.getUserID());
@@ -53,7 +52,7 @@ public class Confirmation_deleteAccount {
          *      deletes all records in                             "likedislike" table that contains currentUser's ID
          *      updates likesCount, dislikesCount of all videos in "video" table
          */
-        LikeDislikeQuery.deleteAcc(login.loginUser.getUserID());
+        LikeDislikeQuery.deleteAcc(Login.loginUser.getUserID());
         Video[] videos = VideoQuery.getVideos();
         for (Video video : videos)
             VideoQuery.updateLikesDislikesCount(video.getVideoID());
@@ -63,7 +62,7 @@ public class Confirmation_deleteAccount {
          *      deletes all videos in "video" table       uploaded by currentUser
          *      deletes all videos in DIRECTORY (videos)  uploaded by currentUser
          */
-        for (Video video : login.loginUser.getVideos()) {
+        for (Video video : Login.loginUser.getVideos()) {
             // delete a record from "video" table
             VideoQuery.delete(video.getVideoID());
             // delete video from directory
@@ -75,9 +74,9 @@ public class Confirmation_deleteAccount {
          *      delete a record in "user" table based on currentUser's ID
          *      delete the user's directory
          */
-        File f = new File(System.getProperty("user.dir") + "\\videos\\" + login.loginUser.getName());
+        File f = new File(System.getProperty("user.dir") + "\\videos\\" + Login.loginUser.getName());
         if (f.delete()) {
-            UserQuery.deleteAcc(login.loginUser.getUserID());
+            UserQuery.deleteAcc(Login.loginUser.getUserID());
             System.out.println("-----Your directory to store video(s) DELETED successfully-----");
         } else
             System.out.println("-----Your directory to store video(s) IS NOT DELETED      -----");

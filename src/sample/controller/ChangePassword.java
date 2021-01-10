@@ -9,16 +9,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Main;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Scanner;
 
-public class changePassword {
+public class ChangePassword {
 
     @FXML
     private PasswordField newPassword;
@@ -42,7 +40,7 @@ public class changePassword {
         User[] users = UserQuery.getUsers();
 
         //System.out.println("-----CHANGING TO NEW PASSWORD   -----");
-        String oldPassword = login.loginUser.password;
+        String oldPassword = Login.loginUser.getPassword();
         String reconfirmPassword = "";
         String newPassword;
         do{
@@ -86,8 +84,8 @@ public class changePassword {
         } while (newPassword.isEmpty() || newPassword.isBlank() || newPassword.equals(oldPassword) || !reconfirmPassword.equals(newPassword));
 
 
-        login.loginUser.password = newPassword;
-        UserQuery.changePassword(login.loginUser);
+        Login.loginUser.setPassword( newPassword );
+        UserQuery.changePassword(Login.loginUser);
 //        System.out.println("-----Password changed successfully   -----");
 //        System.out.println("-----Please login again          (A)-----");
 
