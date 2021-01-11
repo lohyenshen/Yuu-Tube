@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -41,6 +42,7 @@ public class To_Like_To_Comment_Features {
     @FXML private Label likes;
     @FXML private Label userID;
     @FXML private Label dislikes;
+    @FXML private TextField commentText;
 
     private Service<Void> backgroundThread;
 
@@ -57,8 +59,9 @@ public class To_Like_To_Comment_Features {
         userID.setText(Integer.toString(now.getUserID()));
         dislikes.setText(Integer.toString(now.getDislikesCount()));
 
-        for (String c : now.getComments()) {
-            comments.getItems().add(c);
+        String[] coms = now.getComments();
+        for (int i = 1; i < coms.length; i++) {
+            comments.getItems().add(coms[i]);
         }
     }
 
@@ -246,63 +249,25 @@ public class To_Like_To_Comment_Features {
         VideoQuery.updateLikesDislikesCount(HomePage.currentVideoPlayingID);
     }
 
-    public void pressComment(MouseEvent event) throws IOException {
-        like_dislike_comment.setText("Give me some feedback!!!");
-        like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
+    public void pressComment(MouseEvent event) throws Exception {
 
-        URL url = new File("src/sample/resource/writeComment.fxml").toURI().toURL();
-        Parent profileParent = FXMLLoader.load(url);
-        Scene profileScene = new Scene(profileParent);
-
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(profileScene);
-        window.setX(520);
-        window.setY(220);
-        window.show();
-
-    }
-
-    public void replayVideo(MouseEvent event) throws Exception {
-        backgroundThread = new Service<Void>() {
-            //
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-
-                    @Override
-                    protected Void call() throws Exception {
-                        for (int i = 0; i < VideoQuery.getVideos().length; i++) {
-                            PlayVideo.withLogin(Login.loginUser, HomePage.currentVideoPlaying);
-                        }
-                        return null;
-                    }
-                };
-            }
-        };
-        backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-
-            @Override
-            public void handle(WorkerStateEvent workerStateEvent) {
-                System.out.println("Done");
-            }
-        });
-        backgroundThread.start();
-
-        int videoIDD = 0, view = 0, like = 0;
-        String title = "";
-        User[] users = UserQuery.getUsers();
         Video[] videos = VideoQuery.getVideos();
-        ArrayList<Video> sv = new ArrayList<Video>();
 
-        for (int i = 0; i < users.length; i++) {
-            if (HomePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
-                for (int x = 0; x < videos.length; x++) {
-                        if (videos[x].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
-                            view = videos[x].getViewsCount();
-                            views.setText(Integer.toString(view));
-                        }
+        for (int j = 0; j < videos.length; j++) {
+            if (videos[j].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
+                String[] oldComments = videos[j].getComments();
+
+                // StringBuilder is faster than String concatenation
+                StringBuilder s = new StringBuilder();
+                for (String oldComment : oldComments) {
+                    s.append(oldComment);
+                    s.append("\n");
                 }
+                String newComments = s.toString() + commentText.getText() + "\n";
+                VideoQuery.updateComments(newComments, HomePage.currentVideoPlaying.getVideoID());
+                commentText.clear();
             }
         }
+
     }
 }

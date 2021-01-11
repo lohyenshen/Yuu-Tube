@@ -74,6 +74,5 @@
       <Label fx:id="checkEmail" alignment="CENTER" layoutX="155.0" layoutY="273.0" prefHeight="18.0" prefWidth="322.0" textFill="#3cff00" />
       <Label fx:id="emailIncorrect" layoutX="418.0" layoutY="137.0" prefHeight="18.0" prefWidth="100.0" textFill="RED" />
       <Label fx:id="passwordIncorrect" layoutX="418.0" layoutY="186.0" prefHeight="18.0" prefWidth="100.0" textFill="RED" />
-      <Label fx:id="checkEmail1" alignment="CENTER" layoutX="147.0" layoutY="273.0" prefHeight="18.0" prefWidth="322.0" textFill="#3cff00" />
    </children>
 </AnchorPane>

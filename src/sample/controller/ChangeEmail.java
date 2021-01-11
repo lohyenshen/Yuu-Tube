@@ -51,12 +51,6 @@ public class ChangeEmail {
             isUniqueEmail = false;
         }
 
-        if ( oldEmail.equals(newEmail)){
-            //System.out.println("New email CANNOT BE THE SAME as current email !");
-            changeEmail_error.setText("New email CANNOT BE THE SAME as current email");
-            isUniqueEmail = false;
-        }
-
         if ( !newEmail.matches("^[a-zA-Z0-9_+&*-]+(?:\\."+"[a-zA-Z0-9_+&*-]+)*@" +"(?:[a-zA-Z0-9-]+\\.)+[a-z" +"A-Z]{2,7}$")){
             //System.out.println("INVALID EMAIL ! ");
             changeEmail_error.setText("Invalid email");
@@ -65,7 +59,11 @@ public class ChangeEmail {
         }
 
         for (User user : users) {
-            if (newEmail.equals(user.getEmail())) {
+            if ( oldEmail.equals(newEmail)){
+                //System.out.println("New email CANNOT BE THE SAME as current email !");
+                changeEmail_error.setText("New email cannot be the same as current email");
+                isUniqueEmail = false;
+            } else if (newEmail.equals(user.getEmail())) {
                 //System.out.println("THIS EMAIL IS TAKEN! ");
                 changeEmail_error.setText("This email has been registered");
                 isUniqueEmail = false;
