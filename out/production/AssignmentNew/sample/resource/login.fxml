@@ -12,16 +12,16 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Login">
    <children>
-      <ImageView fitHeight="122.0" fitWidth="127.0" layoutX="133.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Photo/111.png" />
+            <Image url="@../Photo/Background.png" />
          </image>
       </ImageView>
-      <Label layoutX="269.0" layoutY="39.0" text="Yuutube" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="40.0" />
-         </font>
-      </Label>
+      <ImageView fitHeight="70.0" fitWidth="149.0" layoutX="119.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/yu.png" />
+         </image>
+      </ImageView>
       <Label layoutX="151.0" layoutY="132.0" text="Email        :" textFill="WHITE">
          <font>
             <Font size="17.0" />
@@ -74,5 +74,10 @@
       <Label fx:id="checkEmail" alignment="CENTER" layoutX="155.0" layoutY="273.0" prefHeight="18.0" prefWidth="322.0" textFill="#3cff00" />
       <Label fx:id="emailIncorrect" layoutX="418.0" layoutY="137.0" prefHeight="18.0" prefWidth="100.0" textFill="RED" />
       <Label fx:id="passwordIncorrect" layoutX="418.0" layoutY="186.0" prefHeight="18.0" prefWidth="100.0" textFill="RED" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/Yuu-%20Tube.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

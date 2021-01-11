@@ -17,7 +17,7 @@
             <Image url="@../Photo/111.png" />
          </image>
       </ImageView>
-      <Label layoutX="67.0" layoutY="16.0" text="Yuutube" textFill="WHITE">
+      <Label layoutX="67.0" layoutY="16.0" text="Yuu-tube" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>

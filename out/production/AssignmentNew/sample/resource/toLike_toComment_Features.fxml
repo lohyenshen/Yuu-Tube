@@ -13,59 +13,22 @@
 
 <AnchorPane fx:id="anchorPane" onMouseMoved="#displayUsernameAfterLogin_trendingVideos" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.To_Like_To_Comment_Features">
     <children>
+      <ImageView fitHeight="400.0" fitWidth="678.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/Background.png" />
+         </image>
+      </ImageView>
         <Pane layoutY="1.0" prefHeight="64.0" prefWidth="600.0">
             <children>
-                <ImageView fitHeight="61.0" fitWidth="58.0" layoutX="6.0" layoutY="3.0" onMouseClicked="#backToHomePage" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="38.0" fitWidth="79.0" layoutY="20.0" onMouseClicked="#backToHomePage" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Photo/111.png" />
+                        <Image url="@../Photo/yu.png" />
                     </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </ImageView>
-                <Label layoutX="67.0" layoutY="19.0" onMouseClicked="#backToHomePage" text="YuuTube" textFill="WHITE">
-                    <font>
-                        <Font name="Arial Bold" size="23.0" />
-                    </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                </Label>
-                <Button fx:id="toSearchVideo" layoutX="181.0" layoutY="17.0" mnemonicParsing="false" onAction="#toSearchVideo" style="-fx-background-color: white;" text="Search Video">
-                    <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Photo/rr.jpg" />
-                            </image>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </ImageView>
-                    </graphic>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font></Button>
-                <Button fx:id="toSearchUser" layoutX="315.0" layoutY="17.0" mnemonicParsing="false" onAction="#toSearchUsers" style="-fx-background-color: white;" text="Search User">
-                    <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Photo/rr.jpg" />
-                            </image>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </ImageView>
-                    </graphic>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font></Button>
-                <ImageView fx:id="profileEnter" fitHeight="38.0" fitWidth="52.0" layoutX="453.0" layoutY="15.0" onMouseClicked="#changeSceneToProfile" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="profileEnter" fitHeight="38.0" fitWidth="52.0" layoutX="463.0" layoutY="16.0" onMouseClicked="#changeSceneToProfile" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Photo/Picture3.png" />
                     </image>
@@ -73,10 +36,15 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </ImageView>
-                <Label fx:id="usernameHomePage" layoutX="510.0" layoutY="25.0" text="Not login" textFill="WHITE">
+                <Label fx:id="usernameHomePage" layoutX="518.0" layoutY="26.0" text="Not login" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Label>
+            <ImageView fitHeight="35.0" fitWidth="150.0" layoutX="67.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Photo/Yuu-%20Tube.png" />
+               </image>
+            </ImageView>
             </children>
         </Pane>
       <ImageView fx:id="like" fitHeight="64.0" fitWidth="64.0" layoutX="205.0" layoutY="271.0" onMouseClicked="#pressLike" pickOnBounds="true" preserveRatio="true">
@@ -95,7 +63,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="comment" fitHeight="38.0" fitWidth="38.0" layoutX="550.0" layoutY="283.0" onMouseClicked="#pressComment" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="comment" fitHeight="38.0" fitWidth="38.0" layoutX="550.0" layoutY="297.0" onMouseClicked="#pressComment" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Photo/cc.png" />
          </image>
@@ -103,7 +71,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label fx:id="like_dislike_comment" alignment="CENTER" layoutX="10.0" layoutY="349.0" onMouseClicked="#backToHomePage" prefHeight="22.0" prefWidth="311.0" textFill="WHITE">
+      <Label fx:id="like_dislike_comment" alignment="CENTER" layoutX="11.0" layoutY="351.0" onMouseClicked="#backToHomePage" prefHeight="22.0" prefWidth="311.0" textFill="#ff0c00">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>
@@ -112,7 +80,7 @@
       <Label fx:id="usernameHomePage11" layoutX="26.0" layoutY="135.0" text="Views           :" textFill="WHITE" />
       <Label fx:id="usernameHomePage111" layoutX="27.0" layoutY="168.0" text="Likes            :" textFill="WHITE" />
       <Label fx:id="usernameHomePage1111" layoutX="27.0" layoutY="231.0" text="User ID        :" textFill="WHITE" />
-      <ListView fx:id="comments" layoutX="341.0" layoutY="105.0" prefHeight="150.0" prefWidth="247.0" />
+      <ListView fx:id="comments" layoutX="341.0" layoutY="132.0" prefHeight="150.0" prefWidth="247.0" />
       <Label fx:id="videoTitle" layoutX="114.0" layoutY="102.0" prefHeight="27.0" prefWidth="219.0" textFill="WHITE" />
       <Label fx:id="views" layoutX="114.0" layoutY="136.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
       <Label fx:id="likes" layoutX="114.0" layoutY="169.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
@@ -125,11 +93,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <Label fx:id="usernameHomePage12" layoutX="341.0" layoutY="82.0" text="Comments  :" textFill="WHITE" />
+      <Label fx:id="usernameHomePage12" layoutX="341.0" layoutY="107.0" text="Comments  :" textFill="WHITE" />
       <Label fx:id="usernameHomePage1112" layoutX="27.0" layoutY="199.0" text="Dislikes        :" textFill="WHITE" />
       <Label fx:id="dislikes" layoutX="114.0" layoutY="198.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
-      <TextField fx:id="commentText" layoutX="341.0" layoutY="289.0" prefHeight="26.0" prefWidth="202.0" promptText="Add a comment..." />
-      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="550.0" layoutY="352.0" onMouseClicked="#closeVideo" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="commentText" layoutX="341.0" layoutY="303.0" prefHeight="26.0" prefWidth="202.0" promptText="Add a comment..." />
+      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="452.0" layoutY="343.0" onMouseClicked="#closeVideo" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Photo/cv2.png" />
          </image>
@@ -137,6 +105,42 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+          <Button fx:id="toSearchUser" layoutX="479.0" layoutY="67.0" mnemonicParsing="false" onAction="#toSearchUsers" style="-fx-background-color: white;" text="Search User">
+              <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@../Photo/rr.jpg" />
+                      </image>
+                      <cursor>
+                          <Cursor fx:constant="HAND" />
+                      </cursor>
+                  </ImageView>
+              </graphic>
+              <cursor>
+                  <Cursor fx:constant="HAND" />
+              </cursor>
+              <font>
+                  <Font name="System Bold" size="12.0" />
+              </font>
+      </Button>
+          <Button fx:id="toSearchVideo" layoutX="341.0" layoutY="67.0" mnemonicParsing="false" onAction="#toSearchVideo" style="-fx-background-color: white;" text="Search Video">
+              <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@../Photo/rr.jpg" />
+                      </image>
+                      <cursor>
+                          <Cursor fx:constant="HAND" />
+                      </cursor>
+                  </ImageView>
+              </graphic>
+              <cursor>
+                  <Cursor fx:constant="HAND" />
+              </cursor>
+              <font>
+                  <Font name="System Bold" size="12.0" />
+              </font>
+      </Button>
     </children>
     <cursor>
         <Cursor fx:constant="DEFAULT" />

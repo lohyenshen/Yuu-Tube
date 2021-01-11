@@ -21,10 +21,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import operation.PlayVideo;
 import sample.Main;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -150,13 +152,15 @@ public class To_Like_To_Comment_Features {
             if (status) {     // user liked the video before, so cannot like again, only dislike
 //                System.out.println("You can't like the video as you liked it before");
                 like_dislike_comment.setText("You already liked it ");
-                like_dislike_comment.setStyle("-fx-background-color: #FF0000; ");
+//                like_dislike_comment.setStyle("-fx-background-color: #FF0000; ");
+                like_dislike_comment.setTextFill(Color.WHITE);
 
             } else {        // user disliked the video before, so cannot dislike again, only like
                 // update dislike to like
                 LikeDislikeQuery.update(Login.loginUser.getUserID(), HomePage.currentVideoPlayingID, 1);
                 like_dislike_comment.setText("You successfully liked the video!!! :)");
-                like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
+                like_dislike_comment.setTextFill(Color.TURQUOISE);
+//                like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
                 VideoQuery.updateLikesDislikesCount(HomePage.currentVideoPlayingID);
 
                 User[] users = UserQuery.getUsers();
@@ -176,7 +180,8 @@ public class To_Like_To_Comment_Features {
         } else {
             LikeDislikeQuery.insertNew( Login.loginUser.getUserID() , HomePage.currentVideoPlayingID, 1);
             like_dislike_comment.setText("You successfully liked the video!!! :)");
-            like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
+            like_dislike_comment.setTextFill(Color.TURQUOISE);
+//            like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
 
             User[] users = UserQuery.getUsers();
             Video[] videos = VideoQuery.getVideos();
@@ -204,13 +209,15 @@ public class To_Like_To_Comment_Features {
             if (!status) {     // user liked the video before, so cannot like again, only dislike
                 System.out.println("You can't dislike the video as you disliked it before");
                 like_dislike_comment.setText("You already disliked it ");
-                like_dislike_comment.setStyle("-fx-background-color: #FF0000; ");
+                like_dislike_comment.setTextFill(Color.WHITE);
+//                like_dislike_comment.setStyle("-fx-background-color: #FF0000; ");
 
             } else {        // user disliked the video before, so cannot dislike again, only like
                 // update dislike to like
                 LikeDislikeQuery.update(Login.loginUser.getUserID(), HomePage.currentVideoPlayingID, 0);
                 like_dislike_comment.setText("You have just disliked the video!!! :(");
-                like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
+                like_dislike_comment.setTextFill(Color.RED);
+//                like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
                 VideoQuery.updateLikesDislikesCount(HomePage.currentVideoPlayingID);
 
                 User[] users = UserQuery.getUsers();
@@ -230,7 +237,8 @@ public class To_Like_To_Comment_Features {
         } else {
             LikeDislikeQuery.insertNew( Login.loginUser.getUserID() , HomePage.currentVideoPlayingID, 0);
             like_dislike_comment.setText("You have just disliked the video!!! :(");
-            like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
+            like_dislike_comment.setTextFill(Color.RED);
+//            like_dislike_comment.setStyle("-fx-background-color: #00FF00; ");
 
             User[] users = UserQuery.getUsers();
             Video[] videos = VideoQuery.getVideos();

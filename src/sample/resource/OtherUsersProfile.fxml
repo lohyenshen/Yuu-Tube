@@ -12,22 +12,19 @@
 
 <AnchorPane onMouseMoved="#showOtherProfileDetails" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.OtherUsersProfile">
    <children>
-      <ImageView fitHeight="61.0" fitWidth="58.0" layoutX="7.0" layoutY="-1.0" onMouseClicked="#backTo" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Photo/111.png" />
+            <Image url="@../Photo/Background.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="76.0" layoutX="-2.0" layoutY="16.0" onMouseClicked="#backTo" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/yu.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label layoutX="64.0" layoutY="10.0" onMouseClicked="#backTo" text="Yuutube" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Label>
       <ImageView fitHeight="85.0" fitWidth="97.0" layoutX="36.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Photo/Picture3.png" />
@@ -49,7 +46,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="243.0" layoutY="10.0" text="User Profile" textFill="WHITE">
+      <Label layoutX="258.0" layoutY="16.0" text="User Profile" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -57,12 +54,12 @@
       <Label fx:id="otherUserID" layoutX="268.0" layoutY="58.0" prefHeight="18.0" prefWidth="82.0" textFill="WHITE" />
       <Label fx:id="otherUserNumOfSubscriber" layoutX="268.0" layoutY="84.0" prefHeight="18.0" prefWidth="82.0" textFill="WHITE" />
       <Label fx:id="otherUserNumOfVideo" layoutX="268.0" layoutY="109.0" prefHeight="18.0" prefWidth="82.0" textFill="WHITE" />
-      <ListView fx:id="otherVideoID" layoutX="65.0" layoutY="190.0" prefHeight="200.0" prefWidth="57.0" style="-fx-background-color: black;" />
+      <ListView fx:id="otherVideoID" layoutX="65.0" layoutY="190.0" prefHeight="200.0" prefWidth="57.0" style="-fx-background-color: light gray;" />
       <Label layoutX="69.0" layoutY="172.0" text="Video ID" textFill="WHITE" />
-      <ListView fx:id="otherVideoTitle" layoutX="122.0" layoutY="190.0" prefHeight="200.0" prefWidth="296.0" style="-fx-background-color: black;" />
+      <ListView fx:id="otherVideoTitle" layoutX="122.0" layoutY="190.0" prefHeight="200.0" prefWidth="296.0" style="-fx-background-color: light gray;" />
       <Label layoutX="246.0" layoutY="172.0" text="Video Title" textFill="WHITE" />
-      <ListView fx:id="otherViews" layoutX="417.0" layoutY="190.0" prefHeight="200.0" prefWidth="57.0" style="-fx-background-color: black;" />
-      <ListView fx:id="otherLikes" layoutX="474.0" layoutY="190.0" prefHeight="200.0" prefWidth="58.0" style="-fx-background-color: black;" />
+      <ListView fx:id="otherViews" layoutX="417.0" layoutY="190.0" prefHeight="200.0" prefWidth="57.0" style="-fx-background-color: light gray;" />
+      <ListView fx:id="otherLikes" layoutX="474.0" layoutY="190.0" prefHeight="200.0" prefWidth="58.0" style="-fx-background-color: light gray;" />
       <Label layoutX="429.0" layoutY="172.0" text="Views" textFill="WHITE" />
       <Label layoutX="490.0" layoutY="172.0" text="Likes" textFill="WHITE" />
       <TextField fx:id="chooseVideo" alignment="CENTER" layoutX="300.0" layoutY="137.0" prefHeight="26.0" prefWidth="65.0" promptText="Video ID" style="-fx-background-radius: 10;" />
@@ -83,5 +80,10 @@
          </cursor>
       </Label>
       <Label fx:id="invalidVideoID" layoutX="418.0" layoutY="141.0" prefHeight="18.0" prefWidth="92.0" textFill="RED" />
+      <ImageView fitHeight="26.0" fitWidth="156.0" layoutX="65.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/Yuu-%20Tube.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

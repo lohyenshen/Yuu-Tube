@@ -30,7 +30,7 @@ public class Main extends Application {
         //Parent root = FXMLLoader.load(getClass().getResource("src/sample/resource/login.fxml"));
 
         stage.getIcons().add(new Image("/sample/Photo/111.png"));
-        stage.setTitle("Yuutube");
+        stage.setTitle("Yuu-tube");
         stage.setScene(new Scene(root));
         stage.initStyle(StageStyle.DECORATED);
         stage.show();
