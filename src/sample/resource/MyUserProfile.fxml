@@ -131,7 +131,7 @@
       <ListView fx:id="likes" layoutX="504.0" layoutY="210.0" prefHeight="188.0" prefWidth="84.0" style="-fx-background-color: light gray;" />
       <ImageView fitHeight="35.0" fitWidth="150.0" layoutX="87.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Photo/Yuu-%20Tube.png" />
+            <Image url="@../Photo/Yuu- Tube.png" />
          </image>
       </ImageView>
    </children>
