@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class PlayVideo {
     private static Process player;
-    private static String vlcPath = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
+    private final static String vlcPath = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
 
     public static void withLogin (User currentUser, Video currentVideo) throws Exception {
 
