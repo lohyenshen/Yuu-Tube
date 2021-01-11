@@ -55,6 +55,12 @@ public class SearchVideo extends HomePage {
     }
 
     public void searchVideo(ActionEvent event) throws Exception {
+        displayVideoID.getItems().clear();
+        displayVideoTitle.getItems().clear();
+        viewsCount.getItems().clear();
+        likesCount.getItems().clear();
+        userUpload.getItems().clear();
+
         String s;
         s = searchVideoText.getText();
 
@@ -81,50 +87,66 @@ public class SearchVideo extends HomePage {
     }
 
     public void playVideo(MouseEvent event) throws Exception {
+        String s;
+        s = searchVideoText.getText();
         String op = videoIDToPlayVideo.getText();
 
+        Video[] searchedVideos  = SearchQuery.searchVideos( s );
+        for (Video video : searchedVideos) {
+            if (Integer.parseInt(op) == video.getVideoID()) {
 
-        for (int i = 0; i < VideoQuery.getVideos().length; i++) {
-            if (Integer.parseInt(op) == VideoQuery.getVideos()[i].getVideoID()) {
-                HomePage.currentVideoPlayingID = VideoQuery.getVideos()[i].getVideoID();
-                HomePage.currentVideoPlaying = VideoQuery.getVideos()[i];
-            }
-        }
+                for (int i = 0; i < VideoQuery.getVideos().length; i++) {
+                    if (Integer.parseInt(op) == VideoQuery.getVideos()[i].getVideoID()) {
+                        HomePage.currentVideoPlayingID = VideoQuery.getVideos()[i].getVideoID();
+                        HomePage.currentVideoPlaying = VideoQuery.getVideos()[i];
+                    }
+                }
 
-        backgroundThread = new Service<Void>() {
-            //
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-
+                backgroundThread = new Service<Void>() {
+                    //
                     @Override
-                    protected Void call() throws Exception {
-                        for (int i = 0; i < VideoQuery.getVideos().length; i++) {
-                            if (Integer.parseInt(op) == VideoQuery.getVideos()[i].getVideoID()) {
-                                PlayVideo.withLogin( Login.loginUser, VideoQuery.getVideos()[i] );
+                    protected Task<Void> createTask() {
+                        return new Task<Void>() {
+
+                            @Override
+                            protected Void call() throws Exception {
+                                for (int i = 0; i < VideoQuery.getVideos().length; i++) {
+                                    if (Integer.parseInt(op) == VideoQuery.getVideos()[i].getVideoID()) {
+                                        PlayVideo.withLogin( Login.loginUser, VideoQuery.getVideos()[i] );
+                                    }
+                                }
+                                return null;
                             }
-                        }
-                        return null;
+                        };
                     }
                 };
+                backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+                    @Override
+                    public void handle(WorkerStateEvent workerStateEvent) {
+                        System.out.println("Done");
+                    }
+                });
+                backgroundThread.start();
+
+                URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
+                Parent profileParent = FXMLLoader.load(url);
+                Scene profileScene = new Scene(profileParent);
+
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(profileScene);
+                window.show();
+            } else {
+                URL url = new File("src/sample/resource/Error_searchVideo_notInList.fxml").toURI().toURL();
+                Parent profileParent = FXMLLoader.load(url);
+                Scene profileScene = new Scene(profileParent);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(profileScene);
+                stage.setX(530);
+                stage.setY(250);
             }
-        };
-        backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-
-            @Override
-            public void handle(WorkerStateEvent workerStateEvent) {
-                System.out.println("Done");
-            }
-        });
-        backgroundThread.start();
-
-        URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
-        Parent profileParent = FXMLLoader.load(url);
-        Scene profileScene = new Scene(profileParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(profileScene);
-        window.show();
+        }
     }
 
     public void toSearchUser(ActionEvent event) throws IOException {

@@ -108,15 +108,15 @@
          </font>
       </Label>
       <Label fx:id="usernameHomePage1" layoutX="23.0" layoutY="105.0" text="Video Title    :" textFill="WHITE" />
-      <Label fx:id="usernameHomePage11" layoutX="26.0" layoutY="139.0" text="Views           :" textFill="WHITE" />
-      <Label fx:id="usernameHomePage111" layoutX="27.0" layoutY="174.0" text="Likes            :" textFill="WHITE" />
-      <Label fx:id="usernameHomePage1111" layoutX="27.0" layoutY="207.0" text="User ID        :" textFill="WHITE" />
+      <Label fx:id="usernameHomePage11" layoutX="26.0" layoutY="135.0" text="Views           :" textFill="WHITE" />
+      <Label fx:id="usernameHomePage111" layoutX="27.0" layoutY="168.0" text="Likes            :" textFill="WHITE" />
+      <Label fx:id="usernameHomePage1111" layoutX="27.0" layoutY="231.0" text="User ID        :" textFill="WHITE" />
       <ListView fx:id="comments" layoutX="341.0" layoutY="105.0" prefHeight="137.0" prefWidth="247.0" />
       <Label fx:id="videoTitle" layoutX="114.0" layoutY="102.0" prefHeight="27.0" prefWidth="219.0" textFill="WHITE" />
-      <Label fx:id="views" layoutX="114.0" layoutY="140.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
-      <Label fx:id="likes" layoutX="114.0" layoutY="175.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
-      <Label fx:id="userID" layoutX="114.0" layoutY="208.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
-      <Label layoutX="23.0" layoutY="65.0" onMouseClicked="#showDetails" prefHeight="26.0" prefWidth="144.0" text="Video Details" textFill="WHITE">
+      <Label fx:id="views" layoutX="114.0" layoutY="136.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
+      <Label fx:id="likes" layoutX="114.0" layoutY="169.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
+      <Label fx:id="userID" layoutX="115.0" layoutY="230.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
+      <Label layoutX="23.0" layoutY="65.0" prefHeight="26.0" prefWidth="144.0" text="Video Details" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="21.0" />
          </font>
@@ -138,6 +138,8 @@
          </cursor>
       </Label>
       <Label fx:id="usernameHomePage12" layoutX="341.0" layoutY="82.0" text="Comments  :" textFill="WHITE" />
+      <Label fx:id="usernameHomePage1112" layoutX="27.0" layoutY="199.0" text="Dislikes        :" textFill="WHITE" />
+      <Label fx:id="dislikes" layoutX="114.0" layoutY="198.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
     </children>
     <cursor>
         <Cursor fx:constant="DEFAULT" />

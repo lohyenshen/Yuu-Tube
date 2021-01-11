@@ -8,21 +8,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.Main;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import TwoFactorAuth.*;
 
 
 public class Login extends HomePage {
 
     @FXML protected TextField emailLogin;
     @FXML private PasswordField passwordLogin;
+    @FXML private Label emailIncorrect;
+    @FXML private Label passwordIncorrect;
+    @FXML private PasswordField OTPInput;
+    @FXML private Label checkEmail;
 
     public static User loginUser;
 
@@ -31,25 +38,37 @@ public class Login extends HomePage {
     }
 
     public void login(ActionEvent event) throws Exception {
-        boolean userExist = false;
-        User currentUser = null;
+//        boolean userExist = false;
+//        User currentUser = null;
+//
+//        String emailEntered = emailLogin.getText();
+//        String passwordEntered = passwordLogin.getText();
+//
+//        User[] users = UserQuery.getUsers();
+//
+//        for (User user : users) {
+//            if (emailEntered.equals(user.getEmail())) {                  // email    in database
+//                emailIncorrect.setText("");
+//                if (passwordEntered.equals(user.getPassword())) {        // password in database
+//                    passwordIncorrect.setText("");
+//                    currentUser = user;
+//                    userExist = true;
+//                    break;
+//                } else {
+//                    passwordLogin.clear();
+//                    passwordIncorrect.setText("Password incorrect");
+//                    passwordIncorrect.setStyle("-fx-background-color: #ff0000; ");
+//                }
+//            } else {
+//                emailLogin.clear();
+//                emailIncorrect.setText("Email incorrect");
+//                emailIncorrect.setStyle("-fx-background-color: #ff0000; ");
+//            }
+//        }
+        String otpEntered = OTPInput.getText();
+        String otpGenerated = OTP.getOTP();
 
-        String emailEntered = emailLogin.getText();
-        String passwordEntered = passwordLogin.getText();
-
-        User[] users = UserQuery.getUsers();
-
-        for (User user : users) {
-            if (emailEntered.equals(user.getEmail())) {                  // email    in database
-                if (passwordEntered.equals(user.getPassword())) {        // password in database
-                    currentUser = user;
-                    userExist = true;
-                    break;
-                }
-            }
-        }
-
-        if (userExist){
+        if ( otpEntered.equals( otpGenerated )){
             URL url = new File("src/sample/resource/homePage.fxml").toURI().toURL();
             Parent profileParent = FXMLLoader.load(url);
             Scene profileScene = new Scene(profileParent);
@@ -58,23 +77,24 @@ public class Login extends HomePage {
             window.setScene(profileScene);
             window.show();
             Main.userOn = true;
-            loginUser = currentUser;
         }
-        else{
-            emailLogin.clear();
-            passwordLogin.clear();
+        else {
+            System.out.println("OTP does not match");
 
-            URL url = new File("src/sample/resource/Error_toLogin.fxml").toURI().toURL();
-            Parent profileParent = FXMLLoader.load(url);
-            Scene profileScene = new Scene(profileParent);
+            OTPInput.clear();
 
-            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            window.setScene(profileScene);
-            window.show();
-            window.setX(500);
-            window.setY(280);
+            checkEmail.setText("OTP does not match");
+            checkEmail.setTextFill(Color.RED);
+//            URL url = new File("src/sample/resource/Error_toLogin.fxml").toURI().toURL();
+//            Parent profileParent = FXMLLoader.load(url);
+//            Scene profileScene = new Scene(profileParent);
+//
+//            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+//            window.setScene(profileScene);
+//            window.show();
+//            window.setX(500);
+//            window.setY(280);
         }
-        loginUser = currentUser;
     }
 
     public void toSignUp(MouseEvent event) throws Exception {
@@ -96,5 +116,44 @@ public class Login extends HomePage {
         window.setScene(profileScene);
         window.show();
         Main.userOn = false;
+    }
+
+    public void requestOTP(ActionEvent event) throws Exception {
+        boolean userExist = false;
+        User currentUser = null;
+
+        String emailEntered = emailLogin.getText();
+        String passwordEntered = passwordLogin.getText();
+
+        User[] users = UserQuery.getUsers();
+
+        for (User user : users) {
+            if (emailEntered.equals(user.getEmail())) {                  // email    in database
+                emailIncorrect.setText("");
+                if (passwordEntered.equals(user.getPassword())) {        // password in database
+                    passwordIncorrect.setText("");
+                    currentUser = user;
+                    userExist = true;
+                    break;
+                } else {
+//                    passwordLogin.clear();
+                    passwordIncorrect.setText("Password incorrect");
+                    break;
+                }
+            } else {
+//                emailLogin.clear();
+                emailIncorrect.setText("Email incorrect");
+            }
+        }
+
+        loginUser = currentUser;
+
+        if (userExist) {
+            ////////////////////////////////////////
+            OTP.sendEmail(currentUser.getEmail());
+
+            checkEmail.setText("OTP has been sent to your email, please check your email.");
+            checkEmail.setTextFill(Color.WHITE);
+        }
     }
 }

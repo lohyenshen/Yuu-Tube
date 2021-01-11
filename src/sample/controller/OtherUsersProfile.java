@@ -54,20 +54,24 @@ public class OtherUsersProfile {
     }
 
     public void showOtherProfileDetails(MouseEvent event) throws Exception {
-        int userIDD = 0, sub = 0, video = 0;
-        String name = "";
-        User[] users = UserQuery.getUsers();
-        for (int i = 0; i < users.length; i++) {
-            if (SearchUser.tempUser.getUserID() == users[i].getUserID()) {
-                userIDD = users[i].getUserID();
-                name = users[i].getName();
-                sub = users[i].getSubscribersCount();
-                video = users[i].getVideosCount();
-                otherUsername.setText(name);
-                otherUserID.setText(Integer.toString(userIDD));
-                otherUserNumOfSubscriber.setText(Integer.toString(sub));
-                otherUserNumOfVideo.setText(Integer.toString(video));
-            }
+        User now  = UserQuery.getUser(SearchUser.tempUser.getUserID());
+
+        otherUsername.setText(now.getName());
+        otherUserID.setText(Integer.toString(now.getUserID()));
+        otherUserNumOfSubscriber.setText(Integer.toString(now.getSubscribersCount()));
+        otherUserNumOfVideo.setText(Integer.toString(now.getVideosCount()));
+
+        otherVideoID.getItems().clear();
+        otherVideoTitle.getItems().clear();
+        otherViews.getItems().clear();
+        otherLikes.getItems().clear();
+
+        User uNow = UserQuery.getUser(SearchUser.tempUser.getUserID());
+        for (Video videos : uNow.getVideos()) {
+            otherVideoID.getItems().add(videos.getVideoID());
+            otherVideoTitle.getItems().add(videos.getTitle());
+            otherViews.getItems().add(videos.getViewsCount());
+            otherLikes.getItems().add(videos.getLikesCount());
         }
 
         if (SubscriberQuery.subscribedTo(Login.loginUser.getUserID(), SearchUser.tempUser.getUserID())) {
@@ -76,33 +80,6 @@ public class OtherUsersProfile {
         } else {
             subscribeButton.setStyle("-fx-background-color: #ff0000; ");
             subscribeButton.setText("Subscribe");
-        }
-    }
-
-    public void showVideo(MouseEvent event) throws Exception {
-        int videoIDD = 0, view = 0, like = 0;
-        String title = "";
-        User[] users = UserQuery.getUsers();
-        Video[] videos = VideoQuery.getVideos();
-        ArrayList<Video> sv = new ArrayList<Video>();
-
-        for (int i = 0; i < users.length; i++) {
-            if (SearchUser.tempUser.getUserID() == users[i].getUserID()) {
-                for (int x = 0; x < videos.length; x++) {
-                    for (int j = 0; j < SearchUser.tempUser.getVideos().length; j++) {
-                        if (videos[x].getVideoID() == SearchUser.tempUser.getVideos()[j].getVideoID()) {
-                            videoIDD = videos[x].getVideoID();
-                            view = videos[x].getViewsCount();
-                            like = videos[x].getLikesCount();
-                            title = videos[x].getTitle();
-                            otherVideoID.getItems().add(videoIDD);
-                            otherVideoTitle.getItems().add(title);
-                            otherViews.getItems().add(view);
-                            otherLikes.getItems().add(like);
-                        }
-                    }
-                }
-            }
         }
     }
 

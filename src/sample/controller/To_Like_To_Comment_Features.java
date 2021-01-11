@@ -40,14 +40,25 @@ public class To_Like_To_Comment_Features {
     @FXML private Label views;
     @FXML private Label likes;
     @FXML private Label userID;
+    @FXML private Label dislikes;
 
     private Service<Void> backgroundThread;
 
-    public void displayUsernameAfterLogin_trendingVideos(MouseEvent event) {
-        if (Main.userOn) {
-            usernameHomePage.setText(Login.loginUser.getName());
-        } else {
-            usernameHomePage.setText("Not login");
+    public void displayUsernameAfterLogin_trendingVideos(MouseEvent event) throws Exception {
+        usernameHomePage.setText(Login.loginUser.getName());
+
+        comments.getItems().clear();
+
+        Video now = VideoQuery.getVideo(HomePage.currentVideoPlaying.getVideoID());
+
+        videoTitle.setText(now.getTitle());
+        views.setText(Integer.toString(now.getViewsCount()));
+        likes.setText(Integer.toString(now.getLikesCount()));
+        userID.setText(Integer.toString(now.getUserID()));
+        dislikes.setText(Integer.toString(now.getDislikesCount()));
+
+        for (String c : now.getComments()) {
+            comments.getItems().add(c);
         }
     }
 
@@ -249,45 +260,6 @@ public class To_Like_To_Comment_Features {
         window.setY(220);
         window.show();
 
-    }
-
-    public void showDetails(MouseEvent event) throws Exception {
-        int videoIDD = 0, view = 0, like = 0;
-        String title = "";
-        User[] users = UserQuery.getUsers();
-        Video[] videos = VideoQuery.getVideos();
-
-        for (int i = 0; i < users.length; i++) {
-            if (HomePage.currentVideoPlaying.getUserID() == users[i].getUserID()) {
-                for (int x = 0; x < videos.length; x++) {
-                    if (videos[x].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
-                        view = videos[x].getViewsCount();
-                        like = videos[x].getLikesCount();
-                        title = videos[x].getTitle();
-
-                        videoTitle.setText(title);
-                        views.setText(Integer.toString(view));
-                        likes.setText(Integer.toString(like));
-                        userID.setText(Integer.toString(HomePage.currentVideoPlaying.getUserID()));
-
-                    }
-                }
-            }
-        }
-
-        for (int j = 0; j < videos.length; j++) {
-            if (videos[j].getVideoID() == HomePage.currentVideoPlaying.getVideoID()) {
-                String[] oldComments = videos[j].getComments();
-
-                // StringBuilder is faster than String concatenation
-                StringBuilder s = new StringBuilder();
-                for (String oldComment : oldComments) {
-                    s.append(oldComment);
-                    s.append("\n");
-                }
-                comments.getItems().add(s);
-            }
-        }
     }
 
     public void replayVideo(MouseEvent event) throws Exception {

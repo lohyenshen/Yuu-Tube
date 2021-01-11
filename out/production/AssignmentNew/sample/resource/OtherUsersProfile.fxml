@@ -74,7 +74,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Label layoutX="210.0" layoutY="133.0" onMouseClicked="#showVideo" text="Videos" textFill="WHITE">
+      <Label layoutX="210.0" layoutY="133.0" text="Videos" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

@@ -55,5 +55,25 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Label fx:id="passwordNotMatch" alignment="CENTER" layoutX="276.0" layoutY="326.0" prefHeight="19.0" prefWidth="149.0" textFill="RED">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="invalidEmail" alignment="CENTER" layoutX="306.0" layoutY="215.0" prefHeight="19.0" prefWidth="95.0" textFill="RED">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="usernameNoEmpty" alignment="CENTER" layoutX="253.0" layoutY="160.0" prefHeight="19.0" prefWidth="194.0" textFill="RED">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="passwordNoEmpty" alignment="CENTER" layoutX="251.0" layoutY="269.0" prefHeight="19.0" prefWidth="194.0" textFill="RED">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

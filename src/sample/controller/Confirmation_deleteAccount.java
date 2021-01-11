@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import operation.DeleteAccount;
 import operation.DeleteVideo;
 import sample.Main;
 
@@ -34,52 +35,7 @@ public class Confirmation_deleteAccount {
     }
 
     public void deleteAccount(ActionEvent event) throws Exception {
-        for (Video video : Login.loginUser.getVideos())
-            System.out.println(video.toString());
-
-        /**
-         * PHASE 1
-         *      deletes all records in                   "subscriber" table that contains currentUser's ID
-         *      updates subscribersCount of all users in "user" table
-         */
-        SubscriberQuery.deleteAcc(Login.loginUser.getUserID());
-        User[] users = UserQuery.getUsers();
-        for (User user : users)
-            UserQuery.updateSubscribersCount(user.getUserID());
-
-        /**
-         * PHASE 2
-         *      deletes all records in                             "likedislike" table that contains currentUser's ID
-         *      updates likesCount, dislikesCount of all videos in "video" table
-         */
-        LikeDislikeQuery.deleteAcc(Login.loginUser.getUserID());
-        Video[] videos = VideoQuery.getVideos();
-        for (Video video : videos)
-            VideoQuery.updateLikesDislikesCount(video.getVideoID());
-
-        /**
-         * PHASE 3
-         *      deletes all videos in "video" table       uploaded by currentUser
-         *      deletes all videos in DIRECTORY (videos)  uploaded by currentUser
-         */
-        for (Video video : Login.loginUser.getVideos()) {
-            // delete a record from "video" table
-            VideoQuery.delete(video.getVideoID());
-            // delete video from directory
-            DeleteVideo.fromDirectory(video);
-        }
-
-        /**
-         * PHASE 4
-         *      delete a record in "user" table based on currentUser's ID
-         *      delete the user's directory
-         */
-        File f = new File(System.getProperty("user.dir") + "\\videos\\" + Login.loginUser.getName());
-        if (f.delete()) {
-            UserQuery.deleteAcc(Login.loginUser.getUserID());
-            System.out.println("-----Your directory to store video(s) DELETED successfully-----");
-        } else
-            System.out.println("-----Your directory to store video(s) IS NOT DELETED      -----");
+        DeleteAccount.main(Login.loginUser);
 
         URL url = new File("src/sample/resource/Notification_accountDeleted.fxml").toURI().toURL();
         Parent profileParent = FXMLLoader.load(url);

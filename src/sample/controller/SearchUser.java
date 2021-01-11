@@ -39,6 +39,11 @@ public class SearchUser {
     }
 
     public void showUserResult(ActionEvent event) throws Exception {
+        userID_search.getItems().clear();
+        username_search.getItems().clear();
+        subscribers_search.getItems().clear();
+        video_Search.getItems().clear();
+
         String s;
         s = userWords.getText();
         //s.isBlank() || s.isEmpty() ||
@@ -78,11 +83,17 @@ public class SearchUser {
 
 
     public void toUserProfile(MouseEvent event) throws Exception {
+        String s;
+        s = userWords.getText();
         String op = toUserID.getText();
+        boolean validID = false;
 
-        for (int i = 0; i < UserQuery.getUsers().length; i++) {
-            if (Integer.parseInt(op) == UserQuery.getUsers()[i].getUserID()) {
-                tempUser = UserQuery.getUsers()[i];
+        User[] searchedUsers = SearchQuery.searchUsers(s, Login.loginUser);
+
+        for (User su : searchedUsers) {
+            if (Integer.parseInt(op) == su.getUserID()) {
+                validID = true;
+                tempUser = su;
                 URL url = new File("src/sample/resource/OtherUsersProfile.fxml").toURI().toURL();
                 Parent profileParent = FXMLLoader.load(url);
                 Scene profileScene = new Scene(profileParent);
@@ -91,6 +102,16 @@ public class SearchUser {
                 window.setScene(profileScene);
                 window.show();
             }
+        }
+        if (!validID) {
+            URL url = new File("src/sample/resource/Error_searchUser_notInList.fxml").toURI().toURL();
+            Parent profileParent = FXMLLoader.load(url);
+            Scene profileScene = new Scene(profileParent);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(profileScene);
+            stage.setX(530);
+            stage.setY(250);
         }
     }
 }

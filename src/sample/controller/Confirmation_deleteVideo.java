@@ -33,7 +33,7 @@ public class Confirmation_deleteVideo {
 
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(profileScene);
-        window.setX(450);
+        window.setX(480);
         window.setY(130);
         window.show();
         Main.userOn = true;

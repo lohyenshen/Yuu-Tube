@@ -9,9 +9,9 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private int videosCount;
-    private int subscribersCount;
-    private Video[] videos;
+    public int videosCount;
+    public int subscribersCount;
+    public Video[] videos;
 
     // for SearchQuery only
     private boolean subscribed;

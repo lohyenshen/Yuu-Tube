@@ -38,26 +38,14 @@ public class DeleteVideo_GUI {
         Main.userOn = true;
     }
 
-    public void showVideoDetails(ActionEvent event) throws Exception {
-        int videoIDD;
-        String title = "";
-        User[] users = UserQuery.getUsers();
-        Video[] videos = VideoQuery.getVideos();
+    public void showVideoDetails(MouseEvent event) throws Exception {
+        videoID.getItems().clear();
+        videoTitle.getItems().clear();
 
-        for (int i = 0; i < users.length; i++) {
-            if (Login.loginUser.getUserID() == users[i].getUserID()) {
-                for (int x = 0; x < videos.length; x++) {
-                    for (int j = 0; j < users[i].getVideos().length; j++) {
-                        if (users[i].getVideos()[j].getVideoID() == videos[x].getVideoID()) {
-                            videoIDD = videos[x].getVideoID();
-                            title = videos[x].getTitle();
-
-                            videoID.getItems().add(videoIDD);
-                            videoTitle.getItems().add(title);
-                        }
-                    }
-                }
-            }
+        User uNow = UserQuery.getUser(Login.loginUser.getUserID());
+        for (Video videos : uNow.getVideos()) {
+            videoID.getItems().add(videos.getVideoID());
+            videoTitle.getItems().add(videos.getTitle());
         }
     }
 

@@ -8,8 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.lang.String;
 
@@ -22,9 +24,18 @@ public class SignUp {
     @FXML private TextField emailSignUp;
     @FXML private PasswordField passwordSignUp;
     @FXML private PasswordField reConfirmPW;
+    @FXML private Label passwordNotMatch;
+    @FXML private Label invalidEmail;
+    @FXML private Label usernameNoEmpty;
+    @FXML private Label passwordNoEmpty;
 
     // "Create" button
     public void saveNewUser(ActionEvent event) throws Exception {
+        passwordNotMatch.setText("");
+        invalidEmail.setText("");
+        usernameNoEmpty.setText("");
+        passwordNoEmpty.setText("");
+
         User[] users = UserQuery.getUsers();
         String name;
         name = usernameSignUp.getText();
@@ -38,25 +49,14 @@ public class SignUp {
         boolean isUniqueName;
         boolean isUniqueEmail;
         boolean created = false;
-        do {
-            isUniqueName = true;
-            isUniqueEmail = true;
-            name = usernameSignUp.getText();
+        isUniqueName = true;
+        isUniqueEmail = true;
 
-            if (name.isEmpty()) {
-                usernameSignUp.clear();
+            if (usernameSignUp.getText().equalsIgnoreCase("")) {
+                usernameNoEmpty.setText("Username cannot be empty");
+                usernameNoEmpty.setTextFill(Color.RED);
 
                 isUniqueName = false;
-
-                URL url = new File("src/sample/resource/Error_toCreateUser.fxml").toURI().toURL();
-                Parent profileParent = FXMLLoader.load(url);
-                Scene profileScene = new Scene(profileParent);
-
-                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                stage.setScene(profileScene);
-                stage.setX(650);
-                stage.setY(300);
-                continue;
             }
 
             email = emailSignUp.getText();
@@ -64,93 +64,63 @@ public class SignUp {
             if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$")) {
                 emailSignUp.clear();
 
+                invalidEmail.setText("Invalid email");
+                invalidEmail.setTextFill(Color.RED);
+
                 isUniqueEmail = false;
 
-                URL url = new File("src/sample/resource/Error_toCreateUser.fxml").toURI().toURL();
-                Parent profileParent = FXMLLoader.load(url);
-                Scene profileScene = new Scene(profileParent);
-
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(profileScene);
-                stage.setX(650);
-                stage.setY(300);
-                continue;
+            } else if (email.equalsIgnoreCase("")) {
+                invalidEmail.setText("Email cannot be empty");
+                invalidEmail.setTextFill(Color.RED);
             }
+
             for (User user : users) {
                 if (name.equals(user.getName())) {
-                    usernameSignUp.clear();
+//                    usernameSignUp.clear();
+                    usernameNoEmpty.setText("The username has been registered");
+                    usernameNoEmpty.setTextFill(Color.RED);
 
                     isUniqueName = false;
-
-                    URL url = new File("src/sample/resource/Error_toCreateUser.fxml").toURI().toURL();
-                    Parent profileParent = FXMLLoader.load(url);
-                    Scene profileScene = new Scene(profileParent);
-
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(profileScene);
-                    stage.setX(650);
-                    stage.setY(300);
                     break;
                 }
             }
             for (User user : users) {
                 if (email.equals(user.getEmail())) {
-                    emailSignUp.clear();
+//                    emailSignUp.clear();
+                    invalidEmail.setText("The username has been registered");
+                    invalidEmail.setTextFill(Color.RED);
 
                     isUniqueEmail = false;
 
-                    URL url = new File("src/sample/resource/Error_toCreateUser.fxml").toURI().toURL();
-                    Parent profileParent = FXMLLoader.load(url);
-                    Scene profileScene = new Scene(profileParent);
-
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(profileScene);
-                    stage.setX(650);
-                    stage.setY(300);
                     break;
                 }
             }
 
             password = passwordSignUp.getText().toString();
             if (password.isEmpty() || password.isBlank()) {
-                URL url = new File("src/sample/resource/Error_toCreateUser.fxml").toURI().toURL();
-                Parent profileParent = FXMLLoader.load(url);
-                Scene profileScene = new Scene(profileParent);
+                passwordNoEmpty.setText("Password cannot be empty");
+                passwordNoEmpty.setTextFill(Color.RED);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(profileScene);
-                stage.setX(650);
-                stage.setY(300);
            }
             confirmPassword = reConfirmPW.getText();
             if (!confirmPassword.equals(password)) {
-                reConfirmPW.clear();
-                passwordSignUp.clear();
+                passwordNotMatch.setText("Passwords do not match");
+                passwordNotMatch.setTextFill(Color.RED);
 
-                URL url = new File("src/sample/resource/Error_toCreateUser.fxml").toURI().toURL();
-                Parent profileParent = FXMLLoader.load(url);
-                Scene profileScene = new Scene(profileParent);
-
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(profileScene);
-                stage.setX(650);
-                stage.setY(300);
+//                reConfirmPW.clear();
+//                passwordSignUp.clear();
             }
 
-        } while (!isUniqueName || !isUniqueEmail || password.isEmpty() || password.isBlank() || !confirmPassword.equals(password));
-
-        created = true;
-        User uniqueUser = new User(0,  name, email, password, 0,0,null);
-        UserQuery.insertNew(uniqueUser);
-
-        if (created) {
-            File f = new File( System.getProperty("user.dir") + "\\videos\\" + uniqueUser.getName() );
+        if (isUniqueName && isUniqueEmail && !password.isEmpty() && !password.isBlank() && confirmPassword.equals(password)) {
+            created = true;
+            User uniqueUser = new User(0, name, email, password, 0, 0, null);
+            UserQuery.insertNew(uniqueUser);
+            File f = new File(System.getProperty("user.dir") + "\\videos\\" + uniqueUser.getName());
             if (f.mkdir()) {
                 System.out.println("-----Your directory to store video(s) created successfully-----");
                 System.out.println("-----Account created successfully -----");
                 System.out.println("-----Please login now          (A)-----");
-            }
-            else{
+            } else {
                 System.out.println("Your directory to store video(s) is NOT CREATED");
                 System.out.println("-----Account NOT CREATED -----");
             }
