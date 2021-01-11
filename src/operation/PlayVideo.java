@@ -10,13 +10,15 @@ import java.util.Scanner;
 
 public class PlayVideo {
     private static Process player;
+    private static String vlcPath = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
+
     public static void withLogin (User currentUser, Video currentVideo) throws Exception {
 
         // this method knows which "user" is playing which "video"
 
         // play the video using VLC player
         String path = System.getProperty("user.dir") + "\\videos\\" + currentVideo.getPath();
-        ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe", "", path);
+        ProcessBuilder pb = new ProcessBuilder(vlcPath, "", path);
         player = pb.start();
 
         // increase viewsCount of video in database
@@ -122,7 +124,7 @@ public class PlayVideo {
 
         // play the video using VLC player
         String path = System.getProperty("user.dir") + "\\videos\\" + currentVideo.getPath();
-        ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe", "", path);
+        ProcessBuilder pb = new ProcessBuilder(vlcPath, "", path);
         Process player = pb.start();
 
         // increase viewsCount of video in database
