@@ -3,7 +3,6 @@ package sample.controller;
 import app.User;
 import app.Video;
 import database.UserQuery;
-import database.VideoQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.Main;
+import operation.DeleteVideo;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,16 +50,19 @@ public class DeleteVideo_GUI {
     }
 
     public void deleteVideo(MouseEvent event) throws Exception {
-        User[] users = UserQuery.getUsers();
-        Video[] videos = VideoQuery.getVideos();
-        for (int i = 0; i < users.length; i++) {
-            if (Login.loginUser.getUserID() == users[i].getUserID()) {
-                for (int x = 0; x < videos.length; x++) {
-                    for (int j = 0; j < users[i].getVideos().length; j++) {
-                        if (Integer.parseInt(deleteVideoSelect.getText()) == videos[x].getVideoID()) {
-                            operation.DeleteVideo.delete(users[i], videos[x]);
-                        }
-                    }
+
+        // modified to support multiple videos deletion
+        Login.loginUser = UserQuery.getUser( Login.loginUser.getUserID() );          // extract latest details
+        String[] selections_String = deleteVideoSelect.getText().split("\\s+");
+
+        for (String s : selections_String){
+            int id = Integer.parseInt( s );
+
+            for (Video video : Login.loginUser.getVideos()){
+                if (id == video.getVideoID()) {
+
+                    DeleteVideo.delete( Login.loginUser, video);
+                    break;
                 }
             }
         }

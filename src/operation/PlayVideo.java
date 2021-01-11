@@ -10,6 +10,10 @@ import java.util.Scanner;
 
 public class PlayVideo {
     private static Process player;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5a9740520297496cc5efb4ffc600640e6eb36feb
     public static void withLogin (User currentUser, Video currentVideo) throws Exception {
 
         // this method knows which "user" is playing which "video"
@@ -56,7 +60,10 @@ public class PlayVideo {
             } while (true) ;
 
             // stop playing
-            player.destroy();
+//            player.destroy();
+    }
+    public static void stopPlaying(){
+        player.destroy();
     }
     public static void stopPlaying(){
         player.destroy();

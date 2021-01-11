@@ -60,7 +60,7 @@ public class ChangePassword {
             changePassword_error.setText("Password cannot be empty");
         }
         if (!reconfirmPassword.equals(newPassword)) {
-            changePassword_error.setText("Passwords are not match");
+            changePassword_error.setText("Passwords does not match");
         }
 
         if (!newPassword.isEmpty() && !newPassword.isBlank() && !newPassword.equals(oldPassword) && reconfirmPassword.equals(newPassword)) {

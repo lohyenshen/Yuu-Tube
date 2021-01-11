@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 
 
-public class SearchVideo extends HomePage {
+public class SearchVideo extends HomePage{
     @FXML private TextField videoIDToPlayVideo;
     @FXML private TextField searchVideoText;
     @FXML private Button searchVideoButton;

@@ -27,6 +27,7 @@ public class MainPage {
                 i = Character.getNumericValue( op ) - 1;
                 if (i>=0 && i<trendingVideos.length)
                     ; // validOperation remain as true
+
                 else
                     validOperation = false;
 
