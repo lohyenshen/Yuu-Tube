@@ -102,6 +102,7 @@ public class SearchVideo extends HomePage{
         if (searchedVideos.length == 0) {
             invalidVideoID.setText("Enter keywords to search");
         }
+
         for (Video video : searchedVideos) {
             if (Integer.parseInt(op) == video.getVideoID()) {
                 isValid = true;

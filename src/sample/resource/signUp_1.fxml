@@ -60,12 +60,12 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Label fx:id="invalidEmail" alignment="CENTER" layoutX="306.0" layoutY="215.0" prefHeight="19.0" prefWidth="95.0" textFill="RED">
+      <Label fx:id="invalidEmail" alignment="CENTER" layoutX="244.0" layoutY="215.0" prefHeight="19.0" prefWidth="216.0" textFill="RED">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label fx:id="usernameNoEmpty" alignment="CENTER" layoutX="253.0" layoutY="160.0" prefHeight="19.0" prefWidth="194.0" textFill="RED">
+      <Label fx:id="usernameNoEmpty" alignment="CENTER" layoutX="244.0" layoutY="160.0" prefHeight="19.0" prefWidth="216.0" textFill="RED">
          <font>
             <Font size="13.0" />
          </font>

@@ -87,7 +87,7 @@ public class SignUp {
             for (User user : users) {
                 if (email.equals(user.getEmail())) {
 //                    emailSignUp.clear();
-                    invalidEmail.setText("The username has been registered");
+                    invalidEmail.setText("The email has been registered");
                     invalidEmail.setTextFill(Color.RED);
 
                     isUniqueEmail = false;

@@ -82,5 +82,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
+      <Label fx:id="invalidVideoID" layoutX="418.0" layoutY="141.0" prefHeight="18.0" prefWidth="92.0" textFill="RED" />
    </children>
 </AnchorPane>

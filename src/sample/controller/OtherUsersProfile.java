@@ -2,10 +2,7 @@ package sample.controller;
 
 import app.User;
 import app.Video;
-import database.Query;
-import database.SubscriberQuery;
-import database.UserQuery;
-import database.VideoQuery;
+import database.*;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -40,6 +37,7 @@ public class OtherUsersProfile {
     @FXML private ListView otherLikes;
     @FXML private TextField chooseVideo;
     @FXML private Button subscribeButton;
+    @FXML private Label invalidVideoID;
 
     private Service<Void> backgroundThread;
 
@@ -84,48 +82,60 @@ public class OtherUsersProfile {
     }
 
     public void playVideo(MouseEvent event) throws Exception {
-        String c = chooseVideo.getText();
+        boolean isValid = false;
+        invalidVideoID.setText("");
 
-        for (int i = 0; i < VideoQuery.getVideos().length; i++) {
-            if (Integer.parseInt(c) == VideoQuery.getVideos()[i].getVideoID()) {
-                HomePage.currentVideoPlaying = VideoQuery.getVideos()[i];
-                HomePage.currentVideoPlayingID = VideoQuery.getVideos()[i].getVideoID();
-            }
+        String op = chooseVideo.getText();
+
+        if (chooseVideo.getText().equalsIgnoreCase("")) {
+            invalidVideoID.setText("No video to play");
         }
-        backgroundThread = new Service<Void>() {
-            //
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
 
+        Video[] searchedVideos  = SearchUser.tempUser.getVideos();
+        if (searchedVideos.length == 0) {
+            invalidVideoID.setText("Enter keywords to search");
+        }
+
+        for (Video video : searchedVideos) {
+            if (Integer.parseInt(op) == video.getVideoID()) {
+                isValid = true;
+                HomePage.currentVideoPlayingID = video.getVideoID();
+                HomePage.currentVideoPlaying = video;
+
+                backgroundThread = new Service<Void>() {
                     @Override
-                    protected Void call() throws Exception {
-                        for (int i = 0; i < VideoQuery.getVideos().length; i++) {
-                            if (Integer.parseInt(c) == VideoQuery.getVideos()[i].getVideoID()) {
-                                PlayVideo.withLogin(Login.loginUser,VideoQuery.getVideos()[i]);
+                    protected Task<Void> createTask() {
+                        return new Task<Void>() {
+
+                            @Override
+                            protected Void call() throws Exception {
+                                PlayVideo.withLogin(Login.loginUser, video);
+                                return null;
                             }
-                        }
-                        return null;
+                        };
                     }
                 };
+                backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+                    @Override
+                    public void handle(WorkerStateEvent workerStateEvent) {
+                        System.out.println("Done");
+                    }
+                });
+                backgroundThread.start();
+
+                URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
+                Parent profileParent = FXMLLoader.load(url);
+                Scene profileScene = new Scene(profileParent);
+
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(profileScene);
+                window.show();
             }
-        };
-        backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-
-            @Override
-            public void handle(WorkerStateEvent workerStateEvent) {
-                System.out.println("Done");
-            }
-        });
-        backgroundThread.start();
-
-        URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
-        Parent profileParent = FXMLLoader.load(url);
-        Scene profileScene = new Scene(profileParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(profileScene);
-        window.show();
+        }
+        if (!isValid) {
+            invalidVideoID.setText("Invalid video ID");
+        }
     }
 
     public void toSubscribe(ActionEvent event) throws Exception {

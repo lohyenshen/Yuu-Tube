@@ -133,6 +133,9 @@
          <image>
             <Image url="@../Photo/cv2.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
     </children>
     <cursor>
