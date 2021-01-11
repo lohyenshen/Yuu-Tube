@@ -10,10 +10,6 @@ import java.util.Scanner;
 
 public class PlayVideo {
     private static Process player;
-<<<<<<< HEAD
-=======
-
->>>>>>> 5a9740520297496cc5efb4ffc600640e6eb36feb
     public static void withLogin (User currentUser, Video currentVideo) throws Exception {
 
         // this method knows which "user" is playing which "video"
@@ -65,10 +61,6 @@ public class PlayVideo {
     public static void stopPlaying(){
         player.destroy();
     }
-    public static void stopPlaying(){
-        player.destroy();
-    }
-
     public static void likes_Dislikes_Operation( User currentUser, Video currentVideo, boolean ld) throws Exception{
         // ld      =          likedislike  (to like   or to dislike  based on current user operation)
         // status  = database_likedislike  (    liked or    disliked based on data in database)
