@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Main;
@@ -19,6 +20,8 @@ import java.net.URL;
 public class ChangeEmail {
 
     @FXML private TextField newEmail;
+    @FXML private Label changeEmail_error;
+
 
     public void stayProfile(ActionEvent event) throws IOException {
         URL url = new File("src/sample/resource/MyUserProfile.fxml").toURI().toURL();
@@ -34,88 +37,56 @@ public class ChangeEmail {
     }
 
     public void changeEmail(ActionEvent event) throws Exception {
+        changeEmail_error.setText("");
         User[] users = UserQuery.getUsers();
 
-        System.out.println("-----CHANGING TO NEW EMAIL   -----");
         String oldEmail = Login.loginUser.getEmail();
         String newEmail;
         boolean isUniqueEmail;
-        do {
-            isUniqueEmail = true;
-            newEmail = this.newEmail.getText();
+        isUniqueEmail = true;
+        newEmail = this.newEmail.getText();
 
-            if (this.newEmail.getText() == null) {
-                URL url = new File("src/sample/resource/Error_changeEmail_noSame.fxml").toURI().toURL();
-                Parent profileParent = FXMLLoader.load(url);
-                Scene profileScene = new Scene(profileParent);
+        if (this.newEmail.getText() == null) {
+            changeEmail_error.setText("Email cannot be empty");
+            isUniqueEmail = false;
+        }
 
-                Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                window.setScene(profileScene);
-                window.setX(500);
-                window.setY(250);
-                window.show();
-                continue;
-            }
+        if ( oldEmail.equals(newEmail)){
+            //System.out.println("New email CANNOT BE THE SAME as current email !");
+            changeEmail_error.setText("New email CANNOT BE THE SAME as current email");
+            isUniqueEmail = false;
+        }
 
-            if ( oldEmail.equals(newEmail)){
-                //System.out.println("New email CANNOT BE THE SAME as current email !");
-                URL url = new File("src/sample/resource/Error_changeEmail_noSame.fxml").toURI().toURL();
-                Parent profileParent = FXMLLoader.load(url);
-                Scene profileScene = new Scene(profileParent);
+        if ( !newEmail.matches("^[a-zA-Z0-9_+&*-]+(?:\\."+"[a-zA-Z0-9_+&*-]+)*@" +"(?:[a-zA-Z0-9-]+\\.)+[a-z" +"A-Z]{2,7}$")){
+            //System.out.println("INVALID EMAIL ! ");
+            changeEmail_error.setText("Invalid email");
+            isUniqueEmail = false;
 
-                Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                window.setScene(profileScene);
-                window.setX(500);
-                window.setY(250);
-                window.show();
+        }
+
+        for (User user : users) {
+            if (newEmail.equals(user.getEmail())) {
+                //System.out.println("THIS EMAIL IS TAKEN! ");
+                changeEmail_error.setText("This email has been registered");
                 isUniqueEmail = false;
-                continue;
-            }
-            if ( !newEmail.matches("^[a-zA-Z0-9_+&*-]+(?:\\."+"[a-zA-Z0-9_+&*-]+)*@" +"(?:[a-zA-Z0-9-]+\\.)+[a-z" +"A-Z]{2,7}$")){
-                //System.out.println("INVALID EMAIL ! ");
-                URL url = new File("src/sample/resource/Error_changeEmail_invalidEmail.fxml").toURI().toURL();
-                Parent profileParent = FXMLLoader.load(url);
-                Scene profileScene = new Scene(profileParent);
-
-                Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                window.setScene(profileScene);
-                window.setX(600);
-                window.setY(250);
-                window.show();
-                isUniqueEmail = false;
-                continue;
-            }
-            for (User user : users) {
-                if (newEmail.equals(user.getEmail())) {
-                    //System.out.println("THIS EMAIL IS TAKEN! ");
-                    URL url = new File("src/sample/resource/Error_changeEmail_emailTaken.fxml").toURI().toURL();
-                    Parent profileParent = FXMLLoader.load(url);
-                    Scene profileScene = new Scene(profileParent);
-
-                    Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                    window.setScene(profileScene);
-                    window.setX(600);
-                    window.setY(250);
-                    window.show();
-                    isUniqueEmail = false;
-                    break;
+                break;
                 }
             }
-        } while (!isUniqueEmail) ;
 
-        Login.loginUser.setEmail( newEmail );
-        UserQuery.changeEmail(Login.loginUser);
-//        System.out.println("-----Email changed successfully   -----");
-//        System.out.println("-----Please login again          (A)-----");
-        URL url = new File("src/sample/resource/Notification_emailChanged.fxml").toURI().toURL();
-        Parent profileParent = FXMLLoader.load(url);
-        Scene profileScene = new Scene(profileParent);
+        if (isUniqueEmail) {
+            Login.loginUser.setEmail( newEmail );
+            UserQuery.changeEmail(Login.loginUser);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(profileScene);
-        window.setX(600);
-        window.setY(250);
-        window.show();
-        Main.userOn = true;
+            URL url = new File("src/sample/resource/Notification_emailChanged.fxml").toURI().toURL();
+            Parent profileParent = FXMLLoader.load(url);
+            Scene profileScene = new Scene(profileParent);
+
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            window.setScene(profileScene);
+            window.setX(600);
+            window.setY(250);
+            window.show();
+            Main.userOn = true;
+        }
     }
 }

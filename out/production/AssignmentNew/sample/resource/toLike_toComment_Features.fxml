@@ -124,19 +124,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="518.0" layoutY="367.0" onMouseClicked="#replayVideo" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Photo/re.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <Label fx:id="usernameHomePage11111" layoutX="553.0" layoutY="372.0" onMouseClicked="#replayVideo" text="Replay" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Label>
       <Label fx:id="usernameHomePage12" layoutX="341.0" layoutY="82.0" text="Comments  :" textFill="WHITE" />
       <Label fx:id="usernameHomePage1112" layoutX="27.0" layoutY="199.0" text="Dislikes        :" textFill="WHITE" />
       <Label fx:id="dislikes" layoutX="114.0" layoutY="198.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />

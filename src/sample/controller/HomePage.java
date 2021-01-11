@@ -7,6 +7,7 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import operation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,6 +39,7 @@ public class HomePage extends MyUsersProfile {
     @FXML protected TextField playTrendingVideoText;
     @FXML private ImageView loginImage;
     @FXML private Label loginWord;
+    @FXML private Label invalidTreadingID;
 
     public static int currentVideoPlayingID;
     public static Video currentVideoPlaying;
@@ -162,182 +164,117 @@ public class HomePage extends MyUsersProfile {
     }
 
     public void playTrendingVideo(MouseEvent event) throws Exception {
+        invalidTreadingID.setText("");
+        String s = playTrendingVideoText.getText();
+        int i;
         if (Main.userOn) {
-            backgroundThread = new Service<Void>() {
-                //
-                @Override
-                protected Task<Void> createTask() {
-                    return new Task<Void>() {
+            Video[] trendingVideos = VideoQuery.getTrendingVideos();
+            i =  Integer.parseInt(s)  - 1;
+            if (i>=0 && i<trendingVideos.length) {
+                backgroundThread = new Service<Void>() {
+                    //
+                    @Override
+                    protected Task<Void> createTask() {
+                        return new Task<Void>() {
 
-                        @Override
-                        protected Void call() throws Exception {
-                            if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
-                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[0]);
-                                tempID = VideoQuery.getTrendingVideos()[0].getVideoID();
-                                currentVideoPlaying = VideoQuery.getTrendingVideos()[0];
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
-                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[1]);
-                                tempID = VideoQuery.getTrendingVideos()[1].getVideoID();
-                                currentVideoPlaying = VideoQuery.getTrendingVideos()[1];
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
-                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[2]);
-                                tempID = VideoQuery.getTrendingVideos()[2].getVideoID();
-                                currentVideoPlaying = VideoQuery.getTrendingVideos()[2];
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
-                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[3]);
-                                tempID = VideoQuery.getTrendingVideos()[3].getVideoID();
-                                currentVideoPlaying = VideoQuery.getTrendingVideos()[3];
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
-                                PlayVideo.withLogin(Login.loginUser, VideoQuery.getTrendingVideos()[4]);
-                                tempID = VideoQuery.getTrendingVideos()[4].getVideoID();
-                                currentVideoPlaying = VideoQuery.getTrendingVideos()[4];
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("")) {
-                                System.out.println("Please enter something");
+                            @Override
+                            protected Void call() throws Exception {
+                                PlayVideo.withLogin(Login.loginUser, trendingVideos[i]);
+                                return null;
                             }
-                            return null;
-                        }
-                    };
-                }
-            };
-            backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                        };
+                    }
+                };
 
-                @Override
-                public void handle(WorkerStateEvent workerStateEvent) {
-                    System.out.println("Done");
-                    backgroundThread.getValue();
-                    backgroundThread.valueProperty();
-                }
-            });
-            backgroundThread.start();
-            if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[0].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[0];
+                backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[1].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[1];
+                    @Override
+                    public void handle(WorkerStateEvent workerStateEvent) {
+                        System.out.println("Done");
+                        backgroundThread.getValue();
+                        backgroundThread.valueProperty();
+                    }
+                });
+                backgroundThread.start();
 
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[2].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[2];
+                currentVideoPlaying = trendingVideos[i];
+                currentVideoPlayingID = trendingVideos[i].getVideoID();
 
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[3].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[3];
+                URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
+                Parent profileParent = FXMLLoader.load(url);
+                Scene profileScene = new Scene(profileParent);
 
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[4].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[4];
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(profileScene);
+                window.show();
 
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("")) {
-                System.out.println("Please enter something");
+            } else {
+                invalidTreadingID.setText("Invalid");
+                invalidTreadingID.setTextFill(Color.RED);
             }
 
-            URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
-            Parent profileParent = FXMLLoader.load(url);
-            Scene profileScene = new Scene(profileParent);
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(profileScene);
-            window.show();
-
         } else {
-            backgroundThread = new Service<Void>() {
+            Video[] trendingVideos = VideoQuery.getTrendingVideos();
+            i =  Integer.parseInt(s)  - 1;
+            if (i>=0 && i<trendingVideos.length) {
+                backgroundThread = new Service<Void>() {
 
-                @Override
-                protected Task<Void> createTask() {
-                    return new Task<Void>() {
+                    @Override
+                    protected Task<Void> createTask() {
+                        return new Task<Void>() {
 
-                        @Override
-                        protected Void call() throws Exception {
-                            if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
-                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[0]);
-                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[0].getVideoID();
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
-                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[1]);
-                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[1].getVideoID();
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
-                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[2]);
-                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[1].getVideoID();
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
-                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[3]);
-                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[3].getVideoID();
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
-                                PlayVideo.withoutLogin(VideoQuery.getTrendingVideos()[4]);
-                                currentVideoPlayingID = VideoQuery.getTrendingVideos()[4].getVideoID();
-
-                            } else if (playTrendingVideoText.getText().equalsIgnoreCase("")) {
-                                System.out.println("Please enter something");
+                            @Override
+                            protected Void call() throws Exception {
+                                PlayVideo.withoutLogin(trendingVideos[i]);
+                                return null;
                             }
+                        };
+                    }
+                };
+                backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent workerStateEvent) {
+                        System.out.println("Done");
+                    }
+                });
+                backgroundThread.start();
 
-                            return null;
-                        }
-                    };
-                }
-            };
-            backgroundThread.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                @Override
-                public void handle(WorkerStateEvent workerStateEvent) {
-                    System.out.println("Done");
-                }
-            });
-            backgroundThread.start();
+                URL url = new File("src/sample/resource/homePage.fxml").toURI().toURL();
+                Parent profileParent = FXMLLoader.load(url);
+                Scene profileScene = new Scene(profileParent);
 
-            URL url = new File("src/sample/resource/homePage.fxml").toURI().toURL();
-            Parent profileParent = FXMLLoader.load(url);
-            Scene profileScene = new Scene(profileParent);
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(profileScene);
-            window.setX(450);
-            window.setY(130);
-            window.show();
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(profileScene);
+                window.setX(450);
+                window.setY(130);
+                window.show();
+            } else {
+                invalidTreadingID.setText("Invalid");
+                invalidTreadingID.setTextFill(Color.RED);
+            }
         }
     }
 
     public void toVideoInfo(MouseEvent event) throws Exception {
+        Video[] trendingVideos = VideoQuery.getTrendingVideos();
+        String s = playTrendingVideoText.getText();
+        int i;
         if (Main.userOn) {
-            if (playTrendingVideoText.getText().equalsIgnoreCase("1")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[0].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[0];
+            i =  Integer.parseInt(s)  - 1;
+            if (i>=0 && i<trendingVideos.length) {
+                currentVideoPlaying = trendingVideos[i];
+                currentVideoPlayingID = trendingVideos[i].getVideoID();
 
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("2")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[1].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[1];
+                URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
+                Parent profileParent = FXMLLoader.load(url);
+                Scene profileScene = new Scene(profileParent);
 
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("3")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[2].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[2];
-
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("4")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[3].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[3];
-
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("5")) {
-                currentVideoPlayingID = VideoQuery.getTrendingVideos()[4].getVideoID();
-                currentVideoPlaying = VideoQuery.getTrendingVideos()[4];
-
-            } else if (playTrendingVideoText.getText().equalsIgnoreCase("")) {
-                System.out.println("Please enter something");
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(profileScene);
+                window.setX(450);
+                window.setY(130);
+                window.show();
             }
-            URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
-            Parent profileParent = FXMLLoader.load(url);
-            Scene profileScene = new Scene(profileParent);
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(profileScene);
-            window.setX(450);
-            window.setY(130);
-            window.show();
         } else {
             URL url = new File("src/sample/resource/Error_loginFirst.fxml").toURI().toURL();
             Parent profileParent = FXMLLoader.load(url);

@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ChangeEmail">
    <children>
       <Label layoutX="170.0" layoutY="104.0" text="You're changing your email" textFill="WHITE">
@@ -27,12 +26,12 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="186.0" layoutY="193.0" text="New Email:" textFill="WHITE">
+      <Label layoutX="186.0" layoutY="187.0" text="New Email:" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="newEmail" layoutX="273.0" layoutY="190.0" />
+      <TextField fx:id="newEmail" layoutX="273.0" layoutY="185.0" />
       <Button layoutX="221.0" layoutY="281.0" mnemonicParsing="false" onAction="#changeEmail" text="Change">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -43,5 +42,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Label fx:id="changeEmail_error" alignment="CENTER" layoutX="197.0" layoutY="235.0" prefHeight="19.0" prefWidth="206.0" textFill="RED">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

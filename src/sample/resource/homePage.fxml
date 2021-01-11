@@ -159,6 +159,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
+      <Label fx:id="invalidTreadingID" alignment="CENTER" layoutX="454.0" layoutY="182.0" prefHeight="18.0" prefWidth="91.0" textFill="RED" />
    </children>
    <cursor>
       <Cursor fx:constant="DEFAULT" />

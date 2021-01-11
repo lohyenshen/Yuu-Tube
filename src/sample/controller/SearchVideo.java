@@ -31,6 +31,8 @@ public class SearchVideo extends HomePage {
     @FXML private ListView viewsCount;
     @FXML private ListView likesCount;
     @FXML private ListView userUpload;
+    @FXML private Label searchVideo_error;
+    @FXML private Label invalidVideoID;
 
     private Service<Void> backgroundThread;
 
@@ -55,6 +57,8 @@ public class SearchVideo extends HomePage {
     }
 
     public void searchVideo(ActionEvent event) throws Exception {
+        searchVideo_error.setText("");
+
         displayVideoID.getItems().clear();
         displayVideoTitle.getItems().clear();
         viewsCount.getItems().clear();
@@ -64,57 +68,54 @@ public class SearchVideo extends HomePage {
         String s;
         s = searchVideoText.getText();
 
-        if (s.isBlank() || s.isEmpty()) {
+        if (s.equalsIgnoreCase("")) {
             //System.out.println("search cannot be EMPTY or BLANK!");
-            URL url = new File("src/sample/resource/Error_searchVideo_noBlank.fxml").toURI().toURL();
-            Parent profileParent = FXMLLoader.load(url);
-            Scene profileScene = new Scene(profileParent);
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(profileScene);
-            stage.setX(500);
-            stage.setY(250);
+            searchVideo_error.setText("Cannot be empty");
         }
 
-        //Video[] searchedVideos  = SearchQuery.searchVideos( s );
-        for (Video video : SearchQuery.searchVideos( s )) {
-            displayVideoID.getItems().add(video.getVideoID());
-            displayVideoTitle.getItems().add(video.getTitle());
-            viewsCount.getItems().add(video.getViewsCount());
-            likesCount.getItems().add(video.getLikesCount());
-            userUpload.getItems().add(video.getUserID());
+        Video[] searchedVideos  = SearchQuery.searchVideos( s );
+        for (Video video : searchedVideos) {
+            if ( searchedVideos.length == 0) {
+                searchVideo_error.setText("No result found");
+            } else {
+                displayVideoID.getItems().add(video.getVideoID());
+                displayVideoTitle.getItems().add(video.getTitle());
+                viewsCount.getItems().add(video.getViewsCount());
+                likesCount.getItems().add(video.getLikesCount());
+                userUpload.getItems().add(video.getUserID());
+            }
         }
     }
 
     public void playVideo(MouseEvent event) throws Exception {
-        String s;
-        s = searchVideoText.getText();
+        boolean isValid = false;
+        invalidVideoID.setText("");
+
+        String s = searchVideoText.getText();
         String op = videoIDToPlayVideo.getText();
 
+        if (videoIDToPlayVideo.getText().equalsIgnoreCase("")) {
+            invalidVideoID.setText("No video to play");
+        }
+
         Video[] searchedVideos  = SearchQuery.searchVideos( s );
+        if (searchedVideos.length == 0) {
+            invalidVideoID.setText("Enter keywords to search");
+        }
         for (Video video : searchedVideos) {
             if (Integer.parseInt(op) == video.getVideoID()) {
-
-                for (int i = 0; i < VideoQuery.getVideos().length; i++) {
-                    if (Integer.parseInt(op) == VideoQuery.getVideos()[i].getVideoID()) {
-                        HomePage.currentVideoPlayingID = VideoQuery.getVideos()[i].getVideoID();
-                        HomePage.currentVideoPlaying = VideoQuery.getVideos()[i];
-                    }
-                }
+                isValid = true;
+                HomePage.currentVideoPlayingID = video.getVideoID();
+                HomePage.currentVideoPlaying = video;
 
                 backgroundThread = new Service<Void>() {
-                    //
                     @Override
                     protected Task<Void> createTask() {
                         return new Task<Void>() {
 
                             @Override
                             protected Void call() throws Exception {
-                                for (int i = 0; i < VideoQuery.getVideos().length; i++) {
-                                    if (Integer.parseInt(op) == VideoQuery.getVideos()[i].getVideoID()) {
-                                        PlayVideo.withLogin( Login.loginUser, VideoQuery.getVideos()[i] );
-                                    }
-                                }
+                                PlayVideo.withLogin(Login.loginUser, video);
                                 return null;
                             }
                         };
@@ -136,16 +137,10 @@ public class SearchVideo extends HomePage {
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(profileScene);
                 window.show();
-            } else {
-                URL url = new File("src/sample/resource/Error_searchVideo_notInList.fxml").toURI().toURL();
-                Parent profileParent = FXMLLoader.load(url);
-                Scene profileScene = new Scene(profileParent);
-
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(profileScene);
-                stage.setX(530);
-                stage.setY(250);
             }
+        }
+        if (!isValid) {
+            invalidVideoID.setText("Invalid video ID");
         }
     }
 
@@ -160,22 +155,32 @@ public class SearchVideo extends HomePage {
     }
 
     public void toVideoDetails(MouseEvent event) throws Exception {
-        Video[] videos = VideoQuery.getVideos();
-        for (int i = 0; i < videos.length; i++) {
-            if (videoIDToPlayVideo.getText().equalsIgnoreCase(Integer.toString(videos[i].getVideoID()))) {
-                currentVideoPlaying = videos[i];
-                currentVideoPlayingID = videos[i].getVideoID();
-            }
+        String op = videoIDToPlayVideo.getText();
+        Video[] searchedVideos = SearchQuery.searchVideos(op);
+        boolean isValid = false;
+
+        if (videoIDToPlayVideo.getText().isEmpty()) {
+            invalidVideoID.setText("No video");
         }
 
-        URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
-        Parent profileParent = FXMLLoader.load(url);
-        Scene profileScene = new Scene(profileParent);
+        for (Video video : searchedVideos) {
+            if (Integer.parseInt(op) == video.getVideoID()) {
+                isValid = true;
+                currentVideoPlaying = video;
+                currentVideoPlayingID = video.getVideoID();
+                URL url = new File("src/sample/resource/toLike_toComment_Features.fxml").toURI().toURL();
+                Parent profileParent = FXMLLoader.load(url);
+                Scene profileScene = new Scene(profileParent);
 
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(profileScene);
-        window.setX(450);
-        window.setY(130);
-        window.show();
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(profileScene);
+                window.setX(450);
+                window.setY(130);
+                window.show();
+            }
+        }
+        if (!isValid) {
+            invalidVideoID.setText("Invalid video ID");
+        }
     }
 }

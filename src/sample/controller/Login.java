@@ -134,6 +134,7 @@ public class Login extends HomePage {
                     passwordIncorrect.setText("");
                     currentUser = user;
                     userExist = true;
+
                     break;
                 } else {
 //                    passwordLogin.clear();
@@ -153,7 +154,7 @@ public class Login extends HomePage {
             OTP.sendEmail(currentUser.getEmail());
 
             checkEmail.setText("OTP has been sent to your email, please check your email.");
-            checkEmail.setTextFill(Color.WHITE);
+            checkEmail.setTextFill(Color.LIME);
         }
     }
 }
