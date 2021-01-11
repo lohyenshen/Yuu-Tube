@@ -129,6 +129,14 @@
       <Label fx:id="usernameHomePage1112" layoutX="27.0" layoutY="199.0" text="Dislikes        :" textFill="WHITE" />
       <Label fx:id="dislikes" layoutX="114.0" layoutY="198.0" prefHeight="18.0" prefWidth="91.0" textFill="WHITE" />
       <TextField fx:id="commentText" layoutX="341.0" layoutY="289.0" prefHeight="26.0" prefWidth="202.0" promptText="Add a comment..." />
+      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="550.0" layoutY="352.0" onMouseClicked="#closeVideo" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photo/cv2.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
     </children>
     <cursor>
         <Cursor fx:constant="DEFAULT" />

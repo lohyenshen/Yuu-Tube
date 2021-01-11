@@ -270,4 +270,17 @@ public class To_Like_To_Comment_Features {
         }
 
     }
+
+    public void closeVideo(MouseEvent event) throws IOException {
+        PlayVideo.stopPlaying();
+
+        URL url = new File("src/sample/resource/homePage.fxml").toURI().toURL();
+        Parent profileParent = FXMLLoader.load(url);
+        Scene profileScene = new Scene(profileParent);
+
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(profileScene);
+        window.show();
+
+    }
 }
