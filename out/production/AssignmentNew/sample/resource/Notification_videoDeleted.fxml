@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="132.0" prefWidth="309.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Notification_videoDeleted">
     <children>
-        <Label layoutX="99.0" layoutY="44.0" text="Video Deleted Successfully !!!" textFill="WHITE">
+        <Label layoutX="99.0" layoutY="44.0" text="Video(s) Deleted Successfully !!!" textFill="WHITE">
             <font>
                 <Font size="14.0" />
             </font>
