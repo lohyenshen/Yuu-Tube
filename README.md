@@ -18,7 +18,7 @@ All external libraries used are under Directory (External Library Used)
 - Password:           wix1002
 
 #To initialize all tables required in MySQL
-- run "SQL_code\create all tables.txt" in MySQL
+- run SQL_code\create all tables.txt in MySQL
 
 
 
