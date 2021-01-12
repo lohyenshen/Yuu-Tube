@@ -1,5 +1,4 @@
 All external libraries used are under Directory (External Library Used)
-GUI is built on IntelliJ IDE.
 
 
 #VLC media player
