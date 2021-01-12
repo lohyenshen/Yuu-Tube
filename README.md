@@ -4,7 +4,7 @@ All external libraries used are under Directory (External Library Used)
 
 #VLC media player
 - https://www.videolan.org/vlc/download-windows.html
-- under src\operation\PlayVideo, replace variable "vlcPath" to the absolute path where vlc.exe is located.
+- under src\operation\PlayVideo, replace final static variable "vlcPath" to the absolute path where vlc.exe is located.
 
 #MySQL
 - https://dev.mysql.com/downloads/installer/
