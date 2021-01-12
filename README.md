@@ -7,12 +7,12 @@ All external libraries used are under Directory (External Library Used)
 #MySQL
 - https://dev.mysql.com/downloads/installer/
 - Server Connections Configuration
-      Connection Name:    assignment
-      Connection Method:  Standard (TCP/IP)
-      Hostname:           127.0.0.1
-      Port    :           3306
-      Username:           root
-      Password:           wix1002
+      - Connection Name:    assignment
+      - Connection Method:  Standard (TCP/IP)
+      - Hostname:           127.0.0.1
+      - Port    :           3306
+      - Username:           root
+      - Password:           wix1002
 
 - To initialize all tables required in MySQL
       run "SQL_code\create all tables.txt" in MySQL
