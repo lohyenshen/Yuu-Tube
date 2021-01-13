@@ -24,6 +24,7 @@ public class SearchQuery extends Query{
         String query =  "SELECT * \n" +
                         "FROM assignment.user\n" +
                         "WHERE name REGEXP \"" + regexp + "\"\n" +
+                        "ORDER BY subscribersCount, videosCount DESC "+"\n" +
                         "LIMIT 10;";
         ResultSet rs = st.executeQuery( query );
 
@@ -63,6 +64,7 @@ public class SearchQuery extends Query{
         String query =  "SELECT * \n" +
                         "FROM assignment.video\n" +
                         "WHERE title REGEXP \"" + regexp + "\"\n" +
+                        "ORDER BY viewsCount, likesCount " + "\n" +
                         "LIMIT 10;";
         ResultSet rs = st.executeQuery( query );
 
