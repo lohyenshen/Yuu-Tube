@@ -23,4 +23,7 @@ All external libraries used are under Directory (External Library Used)
 
 #Edit configuration in IntelliJ
 - module-path "\path\to\javafx-sdk-15.0.1\lib" --add-modules javafx.controls,javafx.fxml
-- replace "\path\to\javafx-sdk-15.0.1\lib",  replace it with absolute path where javafx-sdk-15.0.1\lib is located 
+- replace "\path\to\javafx-sdk-15.0.1\lib",  replace it with absolute path where javafx-sdk-15.0.1\lib is located.
+
+#Run program
+- src\sample\Main.java
