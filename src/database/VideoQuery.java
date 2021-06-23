@@ -80,7 +80,6 @@ public class VideoQuery  extends Query{
 
             int       a        = rs.getInt("videoID");
             int       b        = rs.getInt("userID");
-
             String    c        = rs.getString("title");
             int       d        = rs.getInt("likesCount");
             int       e        = rs.getInt("dislikesCount");

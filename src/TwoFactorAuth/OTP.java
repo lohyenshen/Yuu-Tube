@@ -47,9 +47,7 @@ public class OTP extends Authenticator{
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 
         message.setSubject("One Time Password To Login Yuu-Tube ");
-        /////////////////
         generateOTP();
-        ////////////////
         message.setText("Hi there, your OTP=" + otp );
         Transport.send(message);
 

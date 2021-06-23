@@ -1,6 +1,6 @@
 package app;
 
-import database.VideoQuery;
+import database.*;
 import operation.*;
 
 import java.util.Scanner;

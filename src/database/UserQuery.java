@@ -39,6 +39,7 @@ public class UserQuery extends Query{
 
         int L = getSizeOFResultSet( rs );
         User[] users = new User[L];
+//        System.out.println(L);
 
         for (int i = 0; i < users.length; i++) {
             rs.next();
@@ -82,8 +83,8 @@ public class UserQuery extends Query{
         Statement st = con.createStatement();
 
         String query =   "UPDATE assignment.user\n" +
-                         "SET email = \""+ user.getEmail() + "\"\n" +
-                         "WHERE userID = "+ user.getUserID()+";";
+                "SET email = \""+ user.getEmail() + "\"\n" +
+                "WHERE userID = "+ user.getUserID()+";";
 
         st.executeUpdate( query );
         st.close();
@@ -94,8 +95,8 @@ public class UserQuery extends Query{
         Statement st = con.createStatement();
 
         String query =   "UPDATE assignment.user\n" +
-                         "SET password = \""+ user.getPassword() + "\"\n" +
-                         "WHERE userID = "+ user.getUserID()+";";
+                "SET password = \""+ user.getPassword() + "\"\n" +
+                "WHERE userID = "+ user.getUserID()+";";
 
         st.executeUpdate( query );
         st.close();
@@ -109,8 +110,8 @@ public class UserQuery extends Query{
 
         int occ = SubscriberQuery.getSubscribersCount( userID );
         String query =   "UPDATE assignment.user\n" +
-                         "SET subscribersCount = " + occ + "\n" +
-                         "WHERE userID = " + userID + " ; ";
+                "SET subscribersCount = " + occ + "\n" +
+                "WHERE userID = " + userID + " ; ";
 
         st.executeUpdate( query );
         st.close();
@@ -122,8 +123,8 @@ public class UserQuery extends Query{
         Connection con = getConnection();
         Statement st = con.createStatement();
         String query =   "DELETE \n" +
-                         "FROM assignment.user\n" +
-                         "WHERE userID = " + userID +" ; ";
+                "FROM assignment.user\n" +
+                "WHERE userID = " + userID +" ; ";
 
         st.executeUpdate( query );
         st.close();

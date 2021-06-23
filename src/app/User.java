@@ -100,7 +100,6 @@ public class User {
     // methods
     public static void register() throws Exception{
         // obtain required details of a new user
-
         System.out.println("\nCreating new user account..... Please enter your credentials as below\n");
 
         User uniqueUser = createUniqueUser();
